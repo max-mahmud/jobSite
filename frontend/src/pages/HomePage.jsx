@@ -4,6 +4,7 @@ import { get_category } from "../store/reducers/categoryReducer";
 import { get_jobs, test_job } from "../store/reducers/JobReducer";
 import HashLoader from "react-spinners/HashLoader";
 import MyPagination from "../components/MyPagination";
+import { NavLink } from "react-router-dom";
 
 const HomePage = () => {
   const { category } = useSelector((state) => state.cate);
@@ -14,6 +15,7 @@ const HomePage = () => {
   const [sort, setSort] = React.useState("");
   const [page, setPage] = useState(1);
   const [keyword, setKeyword] = useState("");
+  let [color, setColor] = useState("#ffffff");
 
   useEffect(() => {
     dispatch(get_category());
@@ -46,8 +48,6 @@ const HomePage = () => {
     borderColor: "red",
   };
 
-  let [color, setColor] = useState("#ffffff");
-  const load = true;
   return (
     <div className="min-h-screen  bg-slate-500 flex">
       <div>
@@ -95,7 +95,6 @@ const HomePage = () => {
         </div>
 
         <div className="min-h-[400px]">
-          <h2>Home</h2>
           {loading ? (
             <HashLoader
               color={color}
@@ -104,7 +103,7 @@ const HomePage = () => {
               aria-label="Loading Spinner"
               data-testid="loader"
             />
-          ) : (
+          ) : jobs.length > 0 ? (
             jobs?.map((job, i) => {
               return (
                 <div className="m-4 bg-orange-400 p-2" key={i + 1}>
@@ -112,9 +111,18 @@ const HomePage = () => {
                   <h3>{job.description}</h3>
                   <h3>{job.location}</h3>
                   <h3>{job.salary}</h3>
+                  <NavLink className="bg-teal-500 px-4 py-1 m-2" to={`/jobdetails/${job._id}`}>
+                    View Details
+                  </NavLink>
                 </div>
               );
             })
+          ) : (
+            <>
+              <div className="mt-8">
+                <h2 className="text-center text-4xl">No data found</h2>
+              </div>
+            </>
           )}
         </div>
         <div>

@@ -10,7 +10,7 @@ exports.createCategory = async (req, res) => {
     if (existingCategory) {
       return res.status(200).send({
         success: true,
-        message: "Category Already Exisits",
+        error: "Category Already Exisits",
       });
     }
     const category = await categoryModel.create({ name });
@@ -22,7 +22,7 @@ exports.createCategory = async (req, res) => {
   } catch (error) {
     res.status(500).send({
       success: false,
-      message: "Errro in Category",
+      error: "Errro in Category",
     });
   }
 };
@@ -38,7 +38,7 @@ exports.getAllcategory = async (req, res) => {
     console.log(error);
     res.status(500).send({
       success: false,
-      message: "Error while getting all categories",
+      error: "Error while getting all categories",
     });
   }
 };
@@ -53,7 +53,7 @@ exports.deleteCategory = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).send({
-      message: "error while deleting category",
+      error: "error while deleting category",
     });
   }
 };

@@ -3,6 +3,8 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 
 // express app
 const app = express();
@@ -11,9 +13,13 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+app.use(bodyParser.json());
+app.use(cookieParser());
+
 // endpoints
 app.use("/api", require("./routes/jobRoutes"));
 app.use("/api", require("./routes/categoryRoutes"));
+app.use("/api", require("./routes/userRoutes"));
 
 // port
 const PORT = process.env.PORT || 4000;
