@@ -21,6 +21,10 @@ export const jobReducer = createSlice({
   name: "job",
   initialState: {
     jobs: [],
+    uniqLocations: [],
+    count: 0,
+    pages: 0,
+    page: 0,
     errorMessage: "",
     successMessage: "",
   },
@@ -33,6 +37,10 @@ export const jobReducer = createSlice({
   extraReducers: {
     [get_jobs.fulfilled]: (state, { payload }) => {
       state.jobs = payload.jobs;
+      state.uniqLocations = payload.setUniqueLocation;
+      state.pages = payload.pages;
+      state.page = payload.page;
+      state.count = payload.count;
     },
   },
 });

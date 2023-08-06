@@ -88,7 +88,7 @@ exports.allJobs = async (req, res, next) => {
   let location = req.query.location;
   let locationFilter = location !== "" ? location : setUniqueLocation;
 
-  const pageSize = 12;
+  const pageSize = 4;
   const page = Number(req.query.page) || 1;
   //const count = await Job.find({}).estimatedDocumentCount();
   const count = await jobModel.find({ ...keyword, category: categ }).countDocuments();
@@ -116,7 +116,7 @@ exports.allJobs = async (req, res, next) => {
 //single job
 exports.singleJob = async (req, res, next) => {
   try {
-    const job = await Job.findById(req.params.id);
+    const job = await jobModel.findById(req.params.id);
     res.status(200).json({
       success: true,
       job,
@@ -124,6 +124,10 @@ exports.singleJob = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+};
+
+exports.testjob = async (req, res, next) => {
+  console.log(req.params);
 };
 
 // export const realtedProductController = async (req, res) => {
