@@ -61,10 +61,17 @@ exports.allJobs = async (req, res, next) => {
   //enable search
   const keyword = req.query.keyword
     ? {
-        title: {
-          $regex: req.query.keyword,
-          $options: "i",
-        },
+        $or: [
+          {
+            title: {
+              $regex: req.query.keyword,
+              $options: "i",
+            },
+          },
+          {
+            description: { $regex: req.query.keyword, $options: "i" },
+          },
+        ],
       }
     : {};
 
@@ -88,10 +95,12 @@ exports.allJobs = async (req, res, next) => {
   let location = req.query.location;
   let locationFilter = location !== "" ? location : setUniqueLocation;
 
-  const pageSize = 4;
+  const pageSize = 6;
   const page = Number(req.query.page) || 1;
   //const count = await Job.find({}).estimatedDocumentCount();
-  const count = await jobModel.find({ ...keyword, category: categ }).countDocuments();
+  const count = await jobModel
+    .find({ ...keyword, category: categ, location: locationFilter })
+    .countDocuments();
 
   try {
     const jobs = await jobModel

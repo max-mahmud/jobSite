@@ -2,16 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { get_category } from "../store/reducers/categoryReducer";
 import { get_jobs, test_job } from "../store/reducers/JobReducer";
-import { useParams } from "react-router-dom";
+import HashLoader from "react-spinners/HashLoader";
 import MyPagination from "../components/MyPagination";
-
 
 const HomePage = () => {
   const { category } = useSelector((state) => state.cate);
-  const { jobs, uniqLocations , count, pages} = useSelector((state) => state.job);
+  const { jobs, uniqLocations, count, pages, loading } = useSelector((state) => state.job);
   const dispatch = useDispatch();
   const [location, setLocation] = useState("");
   const [cat, setCat] = React.useState("");
+  const [sort, setSort] = React.useState("");
   const [page, setPage] = useState(1);
   const [keyword, setKeyword] = useState("");
 
@@ -20,8 +20,8 @@ const HomePage = () => {
   }, [get_category]);
 
   useEffect(() => {
-    dispatch(get_jobs({ page, cat, keyword, location }));
-  }, [page, cat, setCat, keyword, location, setLocation]);
+    dispatch(get_jobs({ page, cat, keyword, location, sort }));
+  }, [page, cat, setCat, keyword, location, setLocation, sort]);
 
   const handleChangeCategory = (e) => {
     setCat(e.target.value);
@@ -40,6 +40,14 @@ const HomePage = () => {
     setKeyword(keyword);
   };
 
+  const override = {
+    display: "block",
+    margin: "0 auto",
+    borderColor: "red",
+  };
+
+  let [color, setColor] = useState("#ffffff");
+  const load = true;
   return (
     <div className="min-h-screen  bg-slate-500 flex">
       <div>
@@ -64,6 +72,12 @@ const HomePage = () => {
               );
             })}
           </div>
+          <div className="bg-cyan-500 p-4">
+            <select name="" id="" onClick={(e) => setSort(e.target.value)}>
+              <option value="new">New to Old</option>
+              <option value="old">Old to New</option>
+            </select>
+          </div>
         </div>
       </div>
       <div className="flex-1 bg-green-300 p-5">
@@ -80,18 +94,31 @@ const HomePage = () => {
           </form>
         </div>
 
-        <h2>Home</h2>
-        {jobs?.map((job, i) => {
-          return (
-            <div className="m-4 bg-orange-400 p-2" key={i + 1}>
-              <h2>{job.title}</h2>
-              <h3>{job.description}</h3>
-            </div>
-          );
-        })}
-
+        <div className="min-h-[400px]">
+          <h2>Home</h2>
+          {loading ? (
+            <HashLoader
+              color={color}
+              size={60}
+              cssOverride={override}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+          ) : (
+            jobs?.map((job, i) => {
+              return (
+                <div className="m-4 bg-orange-400 p-2" key={i + 1}>
+                  <h2>{job.title}</h2>
+                  <h3>{job.description}</h3>
+                  <h3>{job.location}</h3>
+                  <h3>{job.salary}</h3>
+                </div>
+              );
+            })
+          )}
+        </div>
         <div>
-          <MyPagination page={page} setPage={setPage}  />
+          <MyPagination page={page} setPage={setPage} />
         </div>
       </div>
     </div>
