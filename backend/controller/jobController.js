@@ -1,59 +1,18 @@
 const jobModel = require("../model/jobModel");
 const categoryModel = require("../model/categoryModel");
+const formidable = require("formidable");
 
 exports.createJob = async (req, res) => {
   const { title, description, salary, category, location } = req.body;
 
   try {
-    if (!title || !description || !salary || !category || !location) {
-      res.status(400).json({ message: " all fileds requires" });
-    }
-
     const newJob = await jobModel.create({ title, description, salary, category, location });
-
-    res.status(201).json({ message: "Job created successfully", newJob });
+    return res.status(201).json({ message: "Job created successfully", newJob });
   } catch (error) {
     console.log(error);
+    return res.status(500).send({ error: "job creation Failed" });
   }
 };
-
-exports.deleteJob = async (req, res) => {
-  try {
-    await jobModel.findByIdAndDelete(req.params.id);
-    res.status(200).json({ message: "Job deleted successfully" });
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-// exports.allJobs = async (req, res) => {
-//   const { page, searchValue, parPage } = req.query;
-
-//   try {
-//     let skipPage = "";
-
-//     if (page && parPage) {
-//       skipPage = parseInt(parPage) * (parseInt(page) - 1);
-//     }
-//     const jobs = await jobModel
-//       .find({
-//         $or: [
-//           { name: { $regex: searchValue, $options: "i" } },
-//           { description: { $regex: searchValue, $options: "i" } },
-//         ],
-//       })
-//       .sort({ createdAt: -1 })
-//       .skip(skipPage)
-//       .limit(parPage);
-
-//     res.status(200).send({
-//       totalJobs: jobs.length,
-//       allJob: jobs,
-//     });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
 
 exports.allJobs = async (req, res, next) => {
   const sort = req.query.sort || "";
@@ -124,19 +83,39 @@ exports.allJobs = async (req, res, next) => {
 
 //single job
 exports.singleJob = async (req, res, next) => {
+  const { title, description, salary, category, location } = req.body;
+  const jobId = req.params.id;
   try {
-    const job = await jobModel.findById(req.params.id);
+    const job = await jobModel.findByIdAndUpdate(jobId, { description, title, salary }, { new: true });
     res.status(200).json({
       success: true,
       job,
     });
   } catch (error) {
-    next(error);
+    console.log(error);
   }
 };
 
-exports.testjob = async (req, res, next) => {
-  console.log(req.params);
+// const { name } = req.body;
+// const { id } = req.params;
+// const category = await categoryModel.findByIdAndUpdate(
+//   id,
+//   { name, slug: slugify(name) },
+//   { new: true }
+// );
+// res.status(200).send({
+//   success: true,
+//   messsage: "Category Updated Successfully",
+//   category,
+// });
+
+exports.deleteJob = async (req, res) => {
+  try {
+    await jobModel.findByIdAndDelete(req.params.id);
+    res.status(200).json({ message: "Job deleted successfully" });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 // export const realtedProductController = async (req, res) => {

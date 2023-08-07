@@ -1,11 +1,11 @@
-const { createJob, allJobs, handlePost, deleteJob, testjob } = require("../controller/jobController");
+const { createJob, allJobs, deleteJob, singleJob } = require("../controller/jobController");
 const { authMiddleware } = require("../middleware/authMiddleware");
 
 const router = require("express").Router();
 
-router.post("/create-job", authMiddleware, createJob);
+router.post("/create-job", createJob);
+router.put("/single-job/:id", singleJob);
 router.delete("/delete/:id", deleteJob);
 router.get("/all-jobs", allJobs);
-router.get("/test-jobs", testjob);
 
 module.exports = router;

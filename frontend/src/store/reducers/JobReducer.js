@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import API from "../../API/Api";
 
 export const get_jobs = createAsyncThunk(
-  "cate/get_jobs",
+  "job/get_jobs",
   async ({ page, keyword, cat, location, sort }, { rejectWithValue, fulfillWithValue }) => {
     try {
       const { data } = await API.get(
@@ -10,6 +10,30 @@ export const get_jobs = createAsyncThunk(
           cat ? cat : ""
         }&location=${location ? location : ""}&sort=${sort}`
       );
+      return fulfillWithValue(data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const add_jobs = createAsyncThunk(
+  "job/add_jobs",
+  async ({ title, description, salary, location, category }, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const { data } = await API.post("/create-job", { title, description, salary, location, category });
+      return fulfillWithValue(data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const single_job = createAsyncThunk(
+  "job/single_job",
+  async ({ id }, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const { data } = await API.get(`/single-job/${id}`, { id });
       return fulfillWithValue(data);
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -47,7 +71,18 @@ export const jobReducer = createSlice({
       state.count = payload.count;
       state.loading = false;
     },
-    [get_jobs.rejected]: (state, { payload }) => {
+    [get_jobs.rejected]: (state, _) => {
+      state.loading = false;
+    },
+    [add_jobs.pending]: (state, _) => {
+      state.loading = true;
+    },
+    [add_jobs.fulfilled]: (state, { payload }) => {
+      state.successMessage = payload.message;
+      state.loading = false;
+    },
+    [add_jobs.rejected]: (state, { payload }) => {
+      state.errorMessage = payload.error;
       state.loading = false;
     },
   },

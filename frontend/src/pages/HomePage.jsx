@@ -8,7 +8,7 @@ import { NavLink } from "react-router-dom";
 import SearchBox from "../components/SearchBox";
 
 const HomePage = () => {
-  const { category } = useSelector((state) => state.cate);
+  const { categorys } = useSelector((state) => state.cate);
   const { jobs, uniqLocations, count, pages, loading } = useSelector((state) => state.job);
   const dispatch = useDispatch();
   const [location, setLocation] = useState("");
@@ -46,7 +46,7 @@ const HomePage = () => {
         <div className="w-40 p-4 bg-zinc-500">
           <select onClick={handleChangeCategory} name="" id="">
             <option value="">Select Category</option>
-            {category?.map((c, i) => {
+            {categorys?.map((c, i) => {
               return (
                 <option key={i + 1} value={c._id}>
                   {c.name}
