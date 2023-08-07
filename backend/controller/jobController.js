@@ -56,7 +56,6 @@ exports.allJobs = async (req, res, next) => {
 
   const pageSize = 6;
   const page = Number(req.query.page) || 1;
-  //const count = await Job.find({}).estimatedDocumentCount();
   const count = await jobModel
     .find({ ...keyword, category: categ, location: locationFilter })
     .countDocuments();
@@ -83,10 +82,9 @@ exports.allJobs = async (req, res, next) => {
 
 //single job
 exports.singleJob = async (req, res, next) => {
-  const { title, description, salary, category, location } = req.body;
   const jobId = req.params.id;
   try {
-    const job = await jobModel.findByIdAndUpdate(jobId, { description, title, salary }, { new: true });
+    const job = await jobModel.findById(jobId).populate("category");
     res.status(200).json({
       success: true,
       job,
@@ -96,23 +94,76 @@ exports.singleJob = async (req, res, next) => {
   }
 };
 
-// const { name } = req.body;
-// const { id } = req.params;
-// const category = await categoryModel.findByIdAndUpdate(
-//   id,
-//   { name, slug: slugify(name) },
-//   { new: true }
-// );
-// res.status(200).send({
-//   success: true,
-//   messsage: "Category Updated Successfully",
-//   category,
-// });
+//single job
+exports.updatJob = async (req, res, next) => {
+  const { title, description, salary, category, location } = req.body;
+  const jobId = req.params.id;
+  try {
+    const job = await jobModel.findByIdAndUpdate(
+      jobId,
+      { description, title, salary, category, location },
+      { new: true }
+    );
+    res.status(200).json({
+      success: true,
+      job,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 exports.deleteJob = async (req, res) => {
   try {
     await jobModel.findByIdAndDelete(req.params.id);
     res.status(200).json({ message: "Job deleted successfully" });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//Table jobs
+exports.tableJobs = async (req, res, next) => {
+  //enable search
+  const keyword = req.query.keyword
+    ? {
+        $or: [
+          {
+            title: { $regex: req.query.keyword, $options: "i" },
+          },
+          {
+            description: { $regex: req.query.keyword, $options: "i" },
+          },
+          {
+            location: { $regex: req.query.keyword, $options: "i" },
+          },
+          {
+            salary: { $regex: req.query.keyword, $options: "i" },
+          },
+        ],
+      }
+    : {};
+
+  const pageSize = 8;
+  const page = Number(req.query.page);
+  console.log(page);
+  const count = await jobModel.find({ ...keyword }).countDocuments();
+
+  try {
+    const jobs = await jobModel
+      .find({ ...keyword })
+      .populate("category")
+      .sort({ createdAt: -1 })
+      .skip(pageSize * (page - 1))
+      .limit(pageSize);
+
+    res.status(200).json({
+      success: true,
+      page,
+      pages: Math.ceil(count / pageSize),
+      count,
+      jobs,
+    });
   } catch (error) {
     console.log(error);
   }

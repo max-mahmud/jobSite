@@ -14,18 +14,19 @@ const SearchBox = ({ setKeyword }) => {
   }, [data]);
 
   return (
-    <div>
-      <input className="py-2 outline-none px-7"
+    <>
+      <input
+        className="py-2 w-full outline-none px-5 font-semibold"
         type="text"
         placeholder=" search"
         name="search"
         value={data}
         onChange={(e) => setData(e.target.value)}
       />
-      <button onClick={handleSubmit} className="py-2 px-5 bg-amber-600">
+      <button onClick={handleSubmit} className="py-2 px-7 bg-orange-500 text-white font-semibold">
         Search
       </button>
-    </div>
+    </>
   );
 };
 

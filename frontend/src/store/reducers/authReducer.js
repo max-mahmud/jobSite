@@ -27,6 +27,18 @@ export const user_login = createAsyncThunk(
   }
 );
 
+export const all_user = createAsyncThunk(
+  "auth/all_user",
+  async (_, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const { data } = await API.get("/all-user");
+      return fulfillWithValue(data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const decodeToken = (token) => {
   try {
     const user = jwt(token);
@@ -40,6 +52,7 @@ export const authReducer = createSlice({
   name: "user",
   initialState: {
     userInfo: decodeToken(localStorage.getItem("userToken")),
+    userCount: "",
     successMessage: "",
     errorMessage: "",
     loading: false,
@@ -76,6 +89,9 @@ export const authReducer = createSlice({
       state.successMessage = payload.message;
       state.loading = false;
       state.userInfo = userInfo;
+    },
+    [all_user.fulfilled]: (state, { payload }) => {
+      state.userCount = payload.userCount;
     },
   },
 });

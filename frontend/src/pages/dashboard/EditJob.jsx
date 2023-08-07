@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { get_category, messageClear } from "../../store/reducers/categoryReducer";
-import { add_jobs } from "../../store/reducers/JobReducer";
+import { add_jobs, single_job, update_job } from "../../store/reducers/JobReducer";
 import { toast } from "react-toastify";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import Loading from "../../components/Loading";
 
 const AddJob = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading } = useSelector((state) => state.job);
+  const { job, loading } = useSelector((state) => state.job);
   const { categorys } = useSelector((state) => state.cate);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [salary, setSalary] = useState("");
-  const [location, setLocation] = useState("");
+  const [title, setTitle] = useState(job.title);
+  const [description, setDescription] = useState(job.description);
+  const [salary, setSalary] = useState(job.salary);
+  const [location, setLocation] = useState(job.location);
   const [cat, setCat] = useState("");
 
   const handleSubmit = (e) => {
@@ -30,19 +31,24 @@ const AddJob = () => {
     } else if (!location) {
       return toast.error("Please enter a location");
     } else {
-      dispatch(add_jobs({ title, description, salary, location, category: cat }));
-      toast.success("Job added successfully");
+      dispatch(update_job({ title, description, salary, location, category: cat, id }));
+      toast.success("Job Updated successfully");
       if (loading) {
         return null;
       } else {
         navigate("/dashboard");
       }
     }
+    console.log(title);
   };
 
   useEffect(() => {
     dispatch(get_category());
   }, [categorys, title, description, salary, location]);
+
+  useEffect(() => {
+    dispatch(single_job({ id }));
+  }, [id, title, description, salary]);
 
   return (
     <div className="bg-slate-200 min-h-screen p-4">

@@ -33,7 +33,53 @@ export const single_job = createAsyncThunk(
   "job/single_job",
   async ({ id }, { rejectWithValue, fulfillWithValue }) => {
     try {
-      const { data } = await API.get(`/single-job/${id}`, { id });
+      const { data } = await API.get(`/single-job/${id}`);
+      return fulfillWithValue(data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const update_job = createAsyncThunk(
+  "job/update_job",
+  async ({ title, description, salary, location, category, id }, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const { data } = await API.put(`/update-job/${id}`, {
+        title,
+        description,
+        salary,
+        location,
+        category,
+        id,
+      });
+      return fulfillWithValue(data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const delet_job = createAsyncThunk(
+  "job/delet_job",
+  async ({ id }, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const { data } = await API.delete(`/delete-job/${id}`);
+      return fulfillWithValue(data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+//table -job
+export const table_jobs = createAsyncThunk(
+  "job/table_jobs",
+  async ({ page, keyword }, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const { data } = await API.get(
+        `/table-jobs?page=${page ? page : "1"}&keyword=${keyword ? keyword : ""}`
+      );
       return fulfillWithValue(data);
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -45,7 +91,9 @@ export const jobReducer = createSlice({
   name: "job",
   initialState: {
     jobs: [],
+    job: "",
     uniqLocations: [],
+    tableJobs: [],
     count: 0,
     pages: 0,
     page: 0,
@@ -83,6 +131,29 @@ export const jobReducer = createSlice({
     },
     [add_jobs.rejected]: (state, { payload }) => {
       state.errorMessage = payload.error;
+      state.loading = false;
+    },
+    [single_job.pending]: (state, _) => {
+      state.loading = true;
+    },
+    [single_job.fulfilled]: (state, { payload }) => {
+      state.job = payload.job;
+      state.loading = false;
+    },
+    [single_job.rejected]: (state, { payload }) => {
+      state.loading = false;
+    },
+    [table_jobs.pending]: (state, { payload }) => {
+      state.loading = true;
+    },
+    [table_jobs.fulfilled]: (state, { payload }) => {
+      state.tableJobs = payload.jobs;
+      state.pages = payload.pages;
+      state.page = payload.page;
+      state.count = payload.count;
+      state.loading = false;
+    },
+    [table_jobs.rejected]: (state, _) => {
       state.loading = false;
     },
   },

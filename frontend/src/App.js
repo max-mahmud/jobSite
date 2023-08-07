@@ -12,6 +12,7 @@ import AddJob from "./pages/dashboard/AddJob";
 import EditJob from "./pages/dashboard/EditJob";
 import User from "./pages/dashboard/User";
 import ProtechUser from "./components/ProtechUser";
+import DashboardPage from "./pages/dashboard/DashboardPage";
 
 const App = () => {
   return (
@@ -26,8 +27,9 @@ const App = () => {
 
         <Route path="/dashboard" element={<ProtechUser />}>
           <Route path="" element={<Dashboard />}>
+            <Route path="" element={<DashboardPage />} />
             <Route path="addjob" element={<AddJob />} />
-            <Route path="editjob" element={<EditJob />} />
+            <Route path="editjob/:id" element={<EditJob />} />
             <Route path="user" element={<User />} />
           </Route>
         </Route>

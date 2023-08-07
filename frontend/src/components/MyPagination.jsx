@@ -12,7 +12,7 @@ const MyPagination = ({ setPage, page }) => {
   // bottom-border, square-fill, square-i, circle,square
 
   return (
-    <div className="bg-slate-200">
+    <div className="w-full">
       <Pagination currentPage={page} totalPages={pages} changeCurrentPage={setPage} theme="square-i" />
     </div>
   );

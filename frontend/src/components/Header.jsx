@@ -7,7 +7,7 @@ const Header = () => {
 
   const role = 1;
   return (
-    <div className=" bg-orange-700 py-3 text-yellow-50">
+    <div className=" bg-orange-700 py-4 text-yellow-50">
       <div className="container mx-auto flex justify-between">
         <div>
           <NavLink to={"/"}>Home</NavLink>
