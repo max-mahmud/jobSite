@@ -106,7 +106,7 @@ exports.allJobs = async (req, res, next) => {
     const jobs = await jobModel
       .find({ ...keyword, category: categ, location: locationFilter })
       .populate("category")
-      .sort({ createdAt: sort == "new" ? 1 : -1 })
+      .sort({ createdAt: sort == "old" ? 1 : -1 })
       .skip(pageSize * (page - 1))
       .limit(pageSize);
     res.status(200).json({

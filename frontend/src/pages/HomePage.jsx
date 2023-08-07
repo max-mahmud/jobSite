@@ -5,6 +5,7 @@ import { get_jobs, test_job } from "../store/reducers/JobReducer";
 import HashLoader from "react-spinners/HashLoader";
 import MyPagination from "../components/MyPagination";
 import { NavLink } from "react-router-dom";
+import SearchBox from "../components/SearchBox";
 
 const HomePage = () => {
   const { category } = useSelector((state) => state.cate);
@@ -31,15 +32,6 @@ const HomePage = () => {
 
   const handleChange = (e) => {
     setLocation(e.target.value);
-  };
-
-  const handlesettle = (e) => {
-    setKeyword(e.target.value);
-  };
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    setKeyword(keyword);
   };
 
   const override = {
@@ -74,6 +66,7 @@ const HomePage = () => {
           </div>
           <div className="bg-cyan-500 p-4">
             <select name="" id="" onClick={(e) => setSort(e.target.value)}>
+              <option value="">Sort</option>
               <option value="new">New to Old</option>
               <option value="old">Old to New</option>
             </select>
@@ -82,16 +75,7 @@ const HomePage = () => {
       </div>
       <div className="flex-1 bg-green-300 p-5">
         <div className="flex bg-teal-600 p-5 m-2">
-          <form onSubmit={handleSearch}>
-            <input
-              className="py-2 px-5"
-              type="text"
-              placeholder="search here"
-              value={keyword}
-              onChange={handlesettle}
-            />
-            <button className="px-4 py-2 bg-orange-500">Search</button>
-          </form>
+          <SearchBox setKeyword={setKeyword} />
         </div>
 
         <div className="min-h-[400px]">

@@ -8,6 +8,10 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Dashboard from "./pages/dashboard/Dashboard";
+import AddJob from "./pages/dashboard/AddJob";
+import EditJob from "./pages/dashboard/EditJob";
+import User from "./pages/dashboard/User";
+import ProtechUser from "./components/ProtechUser";
 
 const App = () => {
   return (
@@ -20,7 +24,13 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/jobdetails/:id" element={<JobDetails />} />
 
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard" element={<ProtechUser />}>
+          <Route path="" element={<Dashboard />}>
+            <Route path="addjob" element={<AddJob />} />
+            <Route path="editjob" element={<EditJob />} />
+            <Route path="user" element={<User />} />
+          </Route>
+        </Route>
       </Routes>
       <Footer />
     </>
