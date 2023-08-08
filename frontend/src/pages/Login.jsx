@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { messageClear, user_login } from "../store/reducers/authReducer";
+import { messageClear, user_login } from "../store/reducers/userReducer";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 

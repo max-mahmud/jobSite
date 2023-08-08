@@ -37,6 +37,7 @@ const Table = () => {
       <table className="bg-white w-11/12 mx-auto text-center border mt-3">
         <thead className=" bg-slate-200 py-2">
           <tr className="border">
+            <th className="py-2">ID</th>
             <th className="py-2">Title</th>
             <th>Description</th>
             <th>Salary</th>
@@ -51,8 +52,9 @@ const Table = () => {
             : tableJobs?.map((j, i) => {
                 return (
                   <tr className="bg-slate-50 hover:bg-slate-300" key={i + 1}>
+                    <td className="py-2">{i + 1}</td>
                     <td className="py-2">{j.title}</td>
-                    <td>{j.description}</td>
+                    <td>{j.description.slice(0,30)}..</td>
                     <td>{j.salary}</td>
                     <td>{j.location}</td>
                     <td>{j.category.name}</td>

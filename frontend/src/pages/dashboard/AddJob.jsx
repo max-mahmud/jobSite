@@ -62,8 +62,11 @@ const AddJob = () => {
   };
 
   return (
-    <div className="bg-slate-200 min-h-screen p-4">
-      <form onSubmit={handleSubmit} className="p-4 w-full mx-auto bg-white gap-3 justify-center items-center">
+    <div className="h-[95vh]">
+      <form
+        onSubmit={handleSubmit}
+        className=" p-4 my-5 w-[97%] mx-auto bg-white gap-3 justify-center items-center"
+      >
         <div className="w-20 h-20 mx-auto mb-3">
           <img
             className=" w-full object-cover border"
@@ -222,7 +225,6 @@ const AddJob = () => {
           <button className="bg-orange-500 py-2 px-4 text-center text-white">Add Job</button>
         </div>
       </form>
-
       {/* {loading && <Loading />} */}
     </div>
   );

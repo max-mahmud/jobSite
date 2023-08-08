@@ -53,8 +53,8 @@ exports.login = async (req, res) => {
 };
 
 exports.getUser = async (req, res) => {
-  const user = await userModel.find({});
-  return res.status(200).send({ user, userCount: user.length });
+  const users = await userModel.find({});
+  return res.status(200).send({ users, userCount: users.length });
 };
 
 exports.deleteUser = async (req, res) => {

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import jwt from "jwt-decode";
-import API from "./../../API/Api";
+import API from "../../API/Api";
 
 export const user_register = createAsyncThunk(
   "user/user_register",
@@ -48,11 +48,12 @@ const decodeToken = (token) => {
   }
 };
 
-export const authReducer = createSlice({
+export const userReducer = createSlice({
   name: "user",
   initialState: {
     userInfo: decodeToken(localStorage.getItem("userToken")),
     userCount: "",
+    users: [],
     successMessage: "",
     errorMessage: "",
     loading: false,
@@ -92,10 +93,11 @@ export const authReducer = createSlice({
     },
     [all_user.fulfilled]: (state, { payload }) => {
       state.userCount = payload.userCount;
+      state.users = payload.users;
     },
   },
 });
 
-export const { messageClear } = authReducer.actions;
+export const { messageClear } = userReducer.actions;
 
-export default authReducer.reducer;
+export default userReducer.reducer;

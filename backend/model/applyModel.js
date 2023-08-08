@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
 const applySchema = new mongoose.Schema({
   name: {
@@ -11,6 +11,11 @@ const applySchema = new mongoose.Schema({
   },
   resume: {
     type: String,
+    required: true,
+  },
+  user: {
+    type: mongoose.ObjectId,
+    ref: "users",
     required: true,
   },
 });

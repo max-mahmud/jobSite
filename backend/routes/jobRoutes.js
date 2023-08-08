@@ -1,4 +1,4 @@
-const { createJob, allJobs, deleteJob, singleJob, updatJob, tableJobs, applyForm } = require("../controller/jobController");
+const { createJob, allJobs, deleteJob, singleJob, updatJob, tableJobs, applyForm, getAllApplyform, deleteApplyForm } = require("../controller/jobController");
 const { authMiddleware } = require("../middleware/authMiddleware");
 
 const router = require("express").Router();
@@ -11,5 +11,9 @@ router.get("/all-jobs", allJobs);
 
 
 router.get("/table-jobs", tableJobs);
+
+router.post("/apply-job", applyForm);
+router.get("/all-apply-job", getAllApplyform);
+router.delete("/delete-apply-job/:applyId", deleteApplyForm);
 
 module.exports = router;

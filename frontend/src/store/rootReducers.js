@@ -1,10 +1,10 @@
 import jobReducer from "./reducers/JobReducer";
-import authReducer from "./reducers/authReducer";
+import userReducer from "./reducers/userReducer";
 import category from "./reducers/categoryReducer";
 
 const rootReducer = {
   cate: category,
   job: jobReducer,
-  user: authReducer,
+  user: userReducer,
 };
 export default rootReducer;

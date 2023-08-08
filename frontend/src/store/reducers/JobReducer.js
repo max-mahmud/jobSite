@@ -29,18 +29,6 @@ export const add_jobs = createAsyncThunk(
   }
 );
 
-export const apply_job = createAsyncThunk(
-  "job/apply_job",
-  async (applyjob, { rejectWithValue, fulfillWithValue }) => {
-    try {
-      const { data } = await API.post("/apply-job", applyjob, { withCredentials: true });
-      return fulfillWithValue(data);
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
-
 export const single_job = createAsyncThunk(
   "job/single_job",
   async ({ id }, { rejectWithValue, fulfillWithValue }) => {
@@ -99,12 +87,53 @@ export const table_jobs = createAsyncThunk(
   }
 );
 
+//job applying
+export const apply_job = createAsyncThunk(
+  "job/apply_job",
+  async (applyjob, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const { data } = await API.post("/apply-job", applyjob, { withCredentials: true });
+      return fulfillWithValue(data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+//get all job applying
+export const get_all_apply_job = createAsyncThunk(
+  "job/get_all_apply_job",
+  async (_, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const { data } = await API.get("/all-apply-job");
+      return fulfillWithValue(data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+//delete job applying
+export const delete_apply_job = createAsyncThunk(
+  "job/delete_apply_job",
+  async ( applyId , { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const { data } = await API.delete(`/delete-apply-job/${applyId}`);
+      return fulfillWithValue(data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const jobReducer = createSlice({
   name: "job",
   initialState: {
     jobs: [],
     job: "",
     uniqLocations: [],
+    allApplyjob: [],
+    allApplyCount: 0,
     tableJobs: [],
     count: 0,
     pages: 0,
@@ -173,6 +202,10 @@ export const jobReducer = createSlice({
     },
     [delet_job.rejected]: (state, { payload }) => {
       state.errorMessage = payload.error;
+    },
+    [get_all_apply_job.fulfilled]: (state, { payload }) => {
+      state.allApplyCount = payload.applyCount;
+      state.allApplyjob = payload.allApplyJob;
     },
   },
 });

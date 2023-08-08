@@ -119,7 +119,7 @@ exports.allJobs = async (req, res) => {
 exports.singleJob = async (req, res, next) => {
   const jobId = req.params.id;
   try {
-    const job = await jobModel.findById(jobId).populate("category");
+    const job = await jobModel.findById(jobId).populate("category").populate("applyForm");
     res.status(200).json({
       success: true,
       job,
@@ -222,4 +222,77 @@ exports.tableJobs = async (req, res, next) => {
 
 // };
 
+// create new application form
+exports.applyForm = async (req, res) => {
+  const form = new formidable.IncomingForm();
+  form.parse(req, async (err, fields, files) => {
+    let { resume } = files;
+    console.log(files?.resume[0]);
+    newFileName = Date.now() + files?.resume[0]?.originalFilename;
 
+    const newPath = path.join(__dirname, "..", "uploads", newFileName);
+    fs.copyFile(files.resume[0].filepath, newPath, (error) => {
+      if (error) {
+        console.error(error);
+        return res.status(500).json({ error: "Error copying file." });
+      } else {
+        console.log("File uploaded successfully");
+        return res.json({ message: "File uploaded successfully." });
+      }
+    });
+
+    try {
+      const newForm = await applyModel.create({
+        name: fields.name[0],
+        email: fields.email[0],
+        resume: newFileName,
+        user: fields.user[0],
+      });
+      const jobid = fields.jobId[0];
+      if (newForm) {
+        await jobModel.findByIdAndUpdate(jobid, { applyForm: newForm._id }, { new: true });
+      }
+      return res.status(201).json({ message: "Applied SuccessFully", form: newForm });
+    } catch (error) {}
+  });
+};
+
+//get alll applications form
+exports.getAllApplyform = async (req, res) => {
+  try {
+    const allform = await applyModel.find({}).populate("user");
+    return res.status(200).json({ applyCount: allform.length, allApplyJob: allform });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//delete application form
+exports.deleteApplyForm = async (req, res) => {
+  const { applyId } = req.params;
+
+  try {
+    const form = await applyModel.findById(applyId);
+
+    if (!form) {
+      return res.status(404).json({ error: "Form not found." });
+    }
+
+    // Delete the associated file
+    const filePath = path.join(__dirname, "..", "uploads", form.resume);
+    await fs.unlink(filePath, (error) => {
+      if (error) {
+        console.error("Error deleting file:", error);
+      } else {
+        console.log("File deleted:");
+      }
+    });
+    // Delete the database entry
+    await applyModel.findByIdAndDelete(applyId);
+
+    return res.status(200).json({ message: "Delete Success" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Error deleting form." });
+  }
+};

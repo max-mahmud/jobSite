@@ -43,6 +43,10 @@ const jobSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    applyForm: {
+      type: mongoose.ObjectId,
+      ref: "apply",
+    },
   },
   { timestamps: true }
 );
