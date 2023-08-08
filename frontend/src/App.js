@@ -13,6 +13,10 @@ import EditJob from "./pages/dashboard/EditJob";
 import User from "./pages/dashboard/User";
 import ProtechUser from "./components/ProtechUser";
 import DashboardPage from "./pages/dashboard/DashboardPage";
+import LoginPage from "./pages/NewLogin";
+import AboutPage from "./pages/About";
+import ContactPage from "./pages/Contact";
+import FaqPage from "./pages/FAQ";
 
 const App = () => {
   return (
@@ -23,6 +27,9 @@ const App = () => {
         <Route path="/profile" element={<Profile />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/faq" element={<FaqPage />} />
         <Route path="/jobdetails/:id" element={<JobDetails />} />
 
         <Route path="/dashboard" element={<ProtechUser />}>

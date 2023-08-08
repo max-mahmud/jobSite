@@ -19,9 +19,21 @@ export const get_jobs = createAsyncThunk(
 
 export const add_jobs = createAsyncThunk(
   "job/add_jobs",
-  async ({ title, description, salary, location, category }, { rejectWithValue, fulfillWithValue }) => {
+  async (addjob, { rejectWithValue, fulfillWithValue }) => {
     try {
-      const { data } = await API.post("/create-job", { title, description, salary, location, category });
+      const { data } = await API.post("/create-job", addjob, { withCredentials: true });
+      return fulfillWithValue(data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const apply_job = createAsyncThunk(
+  "job/apply_job",
+  async (applyjob, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const { data } = await API.post("/apply-job", applyjob, { withCredentials: true });
       return fulfillWithValue(data);
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -155,6 +167,12 @@ export const jobReducer = createSlice({
     },
     [table_jobs.rejected]: (state, _) => {
       state.loading = false;
+    },
+    [delet_job.fulfilled]: (state, { payload }) => {
+      state.successMessage = payload.message;
+    },
+    [delet_job.rejected]: (state, { payload }) => {
+      state.errorMessage = payload.error;
     },
   },
 });

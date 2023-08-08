@@ -15,6 +15,7 @@ app.use(cors());
 
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(express.static("uploads"));
 
 // endpoints
 app.use("/api", require("./routes/jobRoutes"));

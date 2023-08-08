@@ -1,4 +1,4 @@
-const { createJob, allJobs, deleteJob, singleJob, updatJob, tableJobs } = require("../controller/jobController");
+const { createJob, allJobs, deleteJob, singleJob, updatJob, tableJobs, applyForm } = require("../controller/jobController");
 const { authMiddleware } = require("../middleware/authMiddleware");
 
 const router = require("express").Router();

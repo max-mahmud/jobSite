@@ -27,16 +27,26 @@ const jobSchema = new mongoose.Schema(
       ref: "Category",
       required: true,
     },
-    // jobImage : {
-    //     type: String,
-    //     required: true,
-    // },
+    logo: {
+      type: String,
+      required: true,
+    },
+    company: {
+      type: String,
+      required: true,
+    },
+    benefits: {
+      type: String,
+      required: true,
+    },
+    requirements: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );
 
-jobSchema.index({
-  title: "text",
-});
+// company, requirements, benefits, logo
 
 module.exports = mongoose.model("JobDetails", jobSchema);

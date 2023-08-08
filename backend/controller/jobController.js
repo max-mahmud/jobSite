@@ -1,20 +1,55 @@
 const jobModel = require("../model/jobModel");
 const categoryModel = require("../model/categoryModel");
+const applyModel = require("../model/applyModel");
+const cloudinary = require("cloudinary").v2;
 const formidable = require("formidable");
+const fs = require("fs");
+const path = require("path");
 
 exports.createJob = async (req, res) => {
-  const { title, description, salary, category, location } = req.body;
+  const form = new formidable.IncomingForm();
 
-  try {
-    const newJob = await jobModel.create({ title, description, salary, category, location });
-    return res.status(201).json({ message: "Job created successfully", newJob });
-  } catch (error) {
-    console.log(error);
-    return res.status(500).send({ error: "job creation Failed" });
-  }
+  form.parse(req, async (err, fields, files) => {
+    if (err) {
+      return res.status(400).json({ success: false, error: "Invalid data" });
+    }
+    // const newLogo = Date.now() + files.logo[0].originalFilename;
+
+    const { title, description, salary, category, location, company, requirements, benefits, logo } = fields;
+    // Configure Cloudinary
+    cloudinary.config({
+      cloud_name: process.env.CLOUDNARY_NAME,
+      api_key: process.env.API_KEY,
+      api_secret: process.env.API_KEY_SECRET,
+    });
+
+    try {
+      // Upload logo to Cloudinary
+      const result = await cloudinary.uploader.upload(files.logo[0].filepath, {
+        folder: "jobs",
+      });
+
+      const newJob = await jobModel.create({
+        title: title[0],
+        description: description[0],
+        salary: salary[0],
+        category: category[0],
+        location: location[0],
+        company: company[0],
+        requirements: requirements[0],
+        benefits: benefits[0],
+        logo: result.secure_url,
+      });
+
+      res.status(201).json({ success: true, message: "Job created successfully", newJob });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, error: "Job creation failed" });
+    }
+  });
 };
 
-exports.allJobs = async (req, res, next) => {
+exports.allJobs = async (req, res) => {
   const sort = req.query.sort || "";
 
   //enable search
@@ -146,7 +181,6 @@ exports.tableJobs = async (req, res, next) => {
 
   const pageSize = 8;
   const page = Number(req.query.page);
-  console.log(page);
   const count = await jobModel.find({ ...keyword }).countDocuments();
 
   try {
@@ -188,21 +222,4 @@ exports.tableJobs = async (req, res, next) => {
 
 // };
 
-// app.post("/image-send", (req, res) => {
-//   const form = new formidable.IncomingForm();
 
-//   form.parse(req, (err, fields, files) => {
-//     let { image } = files;
-//     image[0].originalFilename = Date.now() + image[0].originalFilename;
-
-//     const newPath = __dirname + `/image/${image[0].originalFilename}`;
-
-//     fs.copyFile(files.image[0].filepath, newPath, (error) => {
-//       if (error) {
-//         console.log(error);
-//       } else {
-//         console.log("upload success");
-//       }
-//     });
-//   });
-// });

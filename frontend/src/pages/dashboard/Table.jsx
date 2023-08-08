@@ -4,34 +4,34 @@ import { NavLink } from "react-router-dom";
 import { delet_job, table_jobs } from "../../store/reducers/JobReducer";
 import MyPagination from "../../components/MyPagination";
 import SearchBox from "../../components/SearchBox";
+import { toast } from "react-toastify";
+import { messageClear } from "../../store/reducers/categoryReducer";
 
 const Table = () => {
   const dispatch = useDispatch();
-  const { tableJobs, uniqLocations, count, pages, loading } = useSelector((state) => state.job);
+  const { tableJobs, successMessage, uniqLocations, count, pages, loading } = useSelector(
+    (state) => state.job
+  );
   const [page, setPage] = useState(1);
   const [keyword, setKeyword] = useState("");
 
   const handleDeleteJob = (id) => {
     dispatch(delet_job({ id }));
+    if (successMessage) {
+      toast.success(successMessage);
+      // dispatch(messageClear());
+    }
   };
 
   useEffect(() => {
     dispatch(table_jobs({ page, keyword }));
-  }, [setPage, page, keyword, setKeyword]);
+  }, [setPage, page, keyword, setKeyword, count]);
 
   return (
     <div className="bg-slate-100 dash-table">
       <div className="flex justify-end w-11/12 mx-auto">
         <div className="bg-white  w-6/12 m- flex justify-end border">
           <SearchBox setKeyword={setKeyword} />
-          {/* <input
-            className="py-2 w-full outline-none px-5 font-semibold"
-            type="text"
-            placeholder="Search Job"
-            value={keyword}
-            onChange={(e) => setKeyword(e.target.value)}
-          />
-          <button className="py-2 px-5 bg-orange-500 text-white font-semibold ">Submit</button> */}
         </div>
       </div>
       <table className="bg-white w-11/12 mx-auto text-center border mt-3">
