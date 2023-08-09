@@ -29,7 +29,7 @@ exports.createCategory = async (req, res) => {
 
 exports.getAllcategory = async (req, res) => {
   try {
-    const category = await categoryModel.find({});
+    const category = await categoryModel.find({}).sort({ createdAt: -1 });
     res.status(200).json({
       count: category.length,
       category,
@@ -54,6 +54,50 @@ exports.deleteCategory = async (req, res) => {
     console.log(error);
     res.status(500).send({
       error: "error while deleting category",
+    });
+  }
+};
+
+exports.updateCategory = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { category } = req.body;
+    const update = await categoryModel.findById(id);
+    if (!update) {
+      return res.status(404).send({
+        message: "Category not found",
+      });
+    }
+    const updatedCategory = await categoryModel.findByIdAndUpdate(
+      id,
+      {
+        name: category,
+      },
+      { new: true }
+    );
+
+    res.status(200).send({
+      message: "Category Updated and Deleted Successfully",
+      updatedCategory,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({
+      error: "Error while updating category",
+    });
+  }
+};
+
+//single category
+exports.singleCategory = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const singleCate = await categoryModel.findById(id);
+    console.log(singleCate);
+    res.status(200).send({ singleCate });
+  } catch (error) {
+    res.status(500).send({
+      error: "Error while getting category",
     });
   }
 };

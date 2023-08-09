@@ -5,6 +5,10 @@ import { NavLink } from "react-router-dom";
 const Header = () => {
   const { userInfo } = useSelector((state) => state.user);
   const role = 1;
+
+  const handleLogout =() => {}
+
+
   return (
     <div className="bg-gradient-to-r from-orange-600 to-orange-800 py-4 text-white">
       <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
@@ -41,7 +45,7 @@ const Header = () => {
                   </NavLink>
                 </>
               )}
-              <button className="bg-red-500 py-2 px-5 text-sm font-medium hover:text-yellow-300 transition duration-300">
+              <button onClick={handleLogout} className="bg-red-500 py-2 px-5 text-sm font-medium hover:text-yellow-300 transition duration-300">
                 Logout
               </button>
             </>

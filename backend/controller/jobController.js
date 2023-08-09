@@ -5,6 +5,13 @@ const cloudinary = require("cloudinary").v2;
 const formidable = require("formidable");
 const fs = require("fs");
 const path = require("path");
+const mongoose = require("mongoose");
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDNARY_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_KEY_SECRET,
+});
 
 exports.createJob = async (req, res) => {
   const form = new formidable.IncomingForm();
@@ -13,15 +20,9 @@ exports.createJob = async (req, res) => {
     if (err) {
       return res.status(400).json({ success: false, error: "Invalid data" });
     }
-    // const newLogo = Date.now() + files.logo[0].originalFilename;
 
-    const { title, description, salary, category, location, company, requirements, benefits, logo } = fields;
+    const { title, description, salary, category, location, company, requirements, benefits } = fields;
     // Configure Cloudinary
-    cloudinary.config({
-      cloud_name: process.env.CLOUDNARY_NAME,
-      api_key: process.env.API_KEY,
-      api_secret: process.env.API_KEY_SECRET,
-    });
 
     try {
       // Upload logo to Cloudinary
@@ -49,6 +50,7 @@ exports.createJob = async (req, res) => {
   });
 };
 
+//get all jobs
 exports.allJobs = async (req, res) => {
   const sort = req.query.sort || "";
 
@@ -129,23 +131,45 @@ exports.singleJob = async (req, res, next) => {
   }
 };
 
-//single job
+//update job
 exports.updatJob = async (req, res, next) => {
-  const { title, description, salary, category, location } = req.body;
-  const jobId = req.params.id;
+  const { id } = req.params;
+  const { title, description, salary, location, company, requirements, benefits, category } = req.body;
   try {
-    const job = await jobModel.findByIdAndUpdate(
-      jobId,
-      { description, title, salary, category, location },
+    const updatedJob = await jobModel.findByIdAndUpdate(
+      id,
+      { title, description, salary, location, company, requirements, benefits, category },
       { new: true }
     );
-    res.status(200).json({
-      success: true,
-      job,
-    });
+
+    res.status(200).json({ success: true, message: "Job updated successfully", updatedJob });
   } catch (error) {
     console.log(error);
   }
+};
+
+exports.updateLogo = async (req, res) => {
+  const form = new formidable.IncomingForm();
+
+  form.parse(req, async (err, fields, files) => {
+    if (err) {
+      return res.status(400).json({ success: false, error: "Invalid data" });
+    }
+
+    const jobid = fields.jobid[0];
+    // console.log(files.newImage[0]);
+
+    try {
+      const result = await cloudinary.uploader.upload(files.newImage[0].filepath, {
+        folder: "jobs",
+      });
+      const updataLogo = await jobModel.findByIdAndUpdate(jobid, { logo: result.secure_url }, { new: true });
+      res.status(200).json({ success: true, message: "Logo updated successfully", updataLogo });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, error: "Logo update failed" });
+    }
+  });
 };
 
 exports.deleteJob = async (req, res) => {

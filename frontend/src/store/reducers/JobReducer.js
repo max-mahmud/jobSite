@@ -43,16 +43,37 @@ export const single_job = createAsyncThunk(
 
 export const update_job = createAsyncThunk(
   "job/update_job",
-  async ({ title, description, salary, location, category, id }, { rejectWithValue, fulfillWithValue }) => {
+  async (
+    { title, description, salary, location, company, requirements, benefits, category, id },
+    { rejectWithValue, fulfillWithValue }
+  ) => {
     try {
       const { data } = await API.put(`/update-job/${id}`, {
         title,
         description,
         salary,
         location,
+        company,
+        requirements,
+        benefits,
         category,
-        id,
       });
+      return fulfillWithValue(data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const update_logo = createAsyncThunk(
+  "job/update_job",
+  async ({ newImage, jobid }, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const formData = new FormData();
+      // formData.append('oldImage', oldImage)
+      formData.append("newImage", newImage);
+      formData.append("jobid", jobid);
+      const { data } = await API.put("/update-logo", formData);
       return fulfillWithValue(data);
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -116,7 +137,7 @@ export const get_all_apply_job = createAsyncThunk(
 //delete job applying
 export const delete_apply_job = createAsyncThunk(
   "job/delete_apply_job",
-  async ( applyId , { rejectWithValue, fulfillWithValue }) => {
+  async (applyId, { rejectWithValue, fulfillWithValue }) => {
     try {
       const { data } = await API.delete(`/delete-apply-job/${applyId}`);
       return fulfillWithValue(data);

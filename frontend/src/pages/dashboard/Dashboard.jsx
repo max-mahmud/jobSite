@@ -4,7 +4,7 @@ import { NavLink, Outlet, useLocation } from "react-router-dom";
 const Dashboard = () => {
   const { pathname } = useLocation();
   return (
-    <div className="h-[105vh] bg-slate-200 flex">
+    <div className="h-[100vh] bg-slate-200 flex">
       <div className="w-1/5 bg-stone-500 flex justify-center">
         <div className="flex flex-col gap-4 items-center justify-center text-center ">
           <NavLink

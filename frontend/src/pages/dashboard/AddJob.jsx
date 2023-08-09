@@ -62,7 +62,7 @@ const AddJob = () => {
   };
 
   return (
-    <div className="h-[95vh]">
+    <div className="h-[100vh]">
       <form
         onSubmit={handleSubmit}
         className=" p-4 my-5 w-[97%] mx-auto bg-white gap-3 justify-center items-center"
