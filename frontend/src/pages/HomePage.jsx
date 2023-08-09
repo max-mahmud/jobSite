@@ -5,7 +5,9 @@ import { get_jobs } from "../store/reducers/JobReducer";
 import HashLoader from "react-spinners/HashLoader";
 import MyPagination from "../components/MyPagination";
 import { NavLink } from "react-router-dom";
-import SearchBox from "../components/SearchBox";
+import Banner from "../components/Banner";
+import { MdAddLocationAlt } from "react-icons/md";
+import { ImPlus } from "react-icons/im";
 
 const HomePage = () => {
   const { categorys } = useSelector((state) => state.cate);
@@ -16,7 +18,7 @@ const HomePage = () => {
   const [sort, setSort] = React.useState("");
   const [page, setPage] = useState(1);
   const [keyword, setKeyword] = useState("");
-  let [color, setColor] = useState("#ffffff");
+  let [color, setColor] = useState("#EC8422");
 
   useEffect(() => {
     dispatch(get_category());
@@ -41,82 +43,120 @@ const HomePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-500 flex">
-      <div className="w-1/4 p-4 bg-zinc-500">
-        <select
-          className="w-full p-2 rounded-md border focus:outline-none focus:ring-2 focus:ring-blue-500"
-          onClick={handleChangeCategory}
-        >
-          <option value="">Select Category</option>
-          {categorys?.map((c, i) => (
-            <option key={i + 1} value={c._id}>
-              {c.name}
-            </option>
-          ))}
-        </select>
-        <div className="flex flex-col mt-4">
-          {uniqLocations.map((lc, i) => (
-            <div className="flex m-2 px-2 bg-green-400 rounded-md" key={i + 1}>
-              <input type="radio" name="all" id={i + 1} value={lc} onClick={(e) => handleChange(e)} />
-              <label htmlFor={i + 1} className="ml-2">
-                {lc}
-              </label>
+    <>
+      <div className="min-h-screen bg-slate-100">
+        <Banner setKeyword={setKeyword} />
+        <div className=" container mx-auto flex gap-5">
+          <div className="w-1/4 pt-5">
+            <div className="bg-white p-4 ">
+              <h3 className="font-semibold text-2xl text-orange-500 mb-4">Find Job By Category</h3>
+              <select
+                className="w-full p-2 rounded border focus:outline-none focus:ring-2 focus:ring-orange-500 appearance-none hover:bg-slate-100 text-slate-500 font-medium"
+                onChange={handleChangeCategory}
+              >
+                <option value="" className=" text-slate-500 font-medium ">
+                  All Category
+                </option>
+                {categorys?.map((c, i) => (
+                  <option className=" text-slate-500 font-medium capitalize" key={i + 1} value={c._id}>
+                    {c.name}
+                  </option>
+                ))}
+              </select>
             </div>
-          ))}
-        </div>
-        <div className="bg-cyan-500 p-4 mt-4">
-          <select
-            className="w-full p-2 rounded-md border focus:outline-none focus:ring-2 focus:ring-blue-500"
-            onClick={(e) => setSort(e.target.value)}
-          >
-            <option value="">Sort</option>
-            <option value="new">New to Old</option>
-            <option value="old">Old to New</option>
-          </select>
-        </div>
-      </div>
-      <div className="flex-1 bg-green-300 p-5">
-        <div className="flex bg-teal-600 p-5 m-2">
-          <SearchBox setKeyword={setKeyword} />
-        </div>
-
-        <div className="min-h-[400px]">
-          {loading ? (
-            <div className="flex items-center justify-center min-h-[400px]">
-              <HashLoader
-                color={color}
-                size={60}
-                cssOverride={override}
-                aria-label="Loading Spinner"
-                data-testid="loader"
-              />
-            </div>
-          ) : jobs.length > 0 ? (
-            jobs?.map((job, i) => (
-              <div className="m-4 bg-orange-400 p-2 rounded-md" key={i + 1}>
-                <h2 className="text-xl font-semibold">{job.title}</h2>
-                <p className="text-gray-700">{job.description}</p>
-                <p className="text-gray-600">Location: {job.location}</p>
-                <p className="text-gray-600">Salary: {job.salary}</p>
-                <NavLink
-                  className="bg-teal-500 px-4 py-1 mt-2 inline-block rounded-md text-white hover:bg-teal-600 transition duration-300"
-                  to={`/jobdetails/${job._id}`}
-                >
-                  View Details
-                </NavLink>
+            <div className="bg-white p-4 mt-4">
+              <h3 className="font-semibold text-2xl text-orange-500 mb-4">Find Job By Category</h3>
+              <div className="flex flex-col mt-4">
+                {uniqLocations.map((lc, i) => (
+                  <div className="flex items-center m-2 px-4 rounded" key={i + 1}>
+                    <input
+                      type="radio"
+                      name="all"
+                      id={i + 1}
+                      value={lc}
+                      onClick={(e) => handleChange(e)}
+                      className="hidden"
+                    />
+                    <label
+                      htmlFor={i + 1}
+                      className="ml-2 text-slate-500 font-medium text-[16px] cursor-pointer flex  gap-x-6 items-center capitalize"
+                    >
+                      <span className="text-orange-500 text-[18px]">
+                        <MdAddLocationAlt />
+                      </span>
+                      {lc}
+                    </label>
+                  </div>
+                ))}
               </div>
-            ))
-          ) : (
-            <div className="mt-8">
-              <h2 className="text-center text-4xl">No data found</h2>
             </div>
-          )}
-        </div>
-        <div>
-          <MyPagination page={page} setPage={setPage} />
+            <div className="bg-white p-4 mt-4">
+              <h3 className="font-semibold text-2xl text-orange-500 mb-4">Sort By Date</h3>
+
+              <select
+                className="w-full p-2 rounded border focus:outline-none focus:ring-2 focus:ring-orange-500 appearance-none hover:bg-slate-100 text-slate-500 font-medium capitalize"
+                onClick={(e) => setSort(e.target.value)}
+              >
+                <option className="font-medium" value="">
+                  Sort Now
+                </option>
+                <option className="font-medium" value="new">
+                  New to Old
+                </option>
+                <option className="font-medium" value="old">
+                  Old to New
+                </option>
+              </select>
+            </div>
+          </div>
+          <div className="flex-1 bg-slate-100">
+            <div className="min-h-[400px]">
+              {loading ? (
+                <div className="flex items-center justify-center min-h-[400px]">
+                  <HashLoader
+                    color={color}
+                    size={60}
+                    cssOverride={override}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                  />
+                </div>
+              ) : jobs.length > 0 ? (
+                jobs?.map((job, i) => (
+                  <div className="m-4 bg-white p-4 rounded" key={i + 1}>
+                    <p className=" flex text-orange-500 items-center gap-3 font-medium">
+                      <span className="text-orange-500 text-[18px]">
+                        <MdAddLocationAlt />
+                      </span>
+                      {job.location}
+                    </p>
+                    <h2 className="text-2xl text-slate-700 font-semibold py-2">{job.title}</h2>
+                    <p className="text-slate-500 font-semibold py-1">{job.description.slice(0, 250)}...</p>
+                    <p className="text-slate-600 font-semibold ">Salary: {job.salary}</p>
+                    <NavLink
+                      className="bg-orange-500 px-4 py-2 mt-2 flex gap-3 w-[180px] items-center  rounded text-white hover:bg-orange-600 transition duration-300 text-[17px] font-medium"
+                      to={`/jobdetails/${job._id}`}
+                    >
+                      <span>
+                        <ImPlus />
+                      </span>{" "}
+                      More Details
+                    </NavLink>
+                  </div>
+                ))
+              ) : (
+                <div className="mt-4">
+                  <h2 className="text-center text-4xl text-slate-500 font-medium">No Data Found</h2>
+                </div>
+              )}
+            </div>
+            <div className="ml-4">
+              <MyPagination page={page} setPage={setPage} />
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

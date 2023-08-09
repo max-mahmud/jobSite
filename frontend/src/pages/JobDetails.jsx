@@ -35,27 +35,23 @@ const JobDetailsPage = () => {
     setApplicantEmail("");
     setApplicantResume("");
   };
-  // console.log(job?.applyForm?.user);
   return (
     <div className="container min-h-screen mx-auto mt-10 p-5">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* Left Side - Job Details */}
-        <div className="bg-orange-100 p-6 rounded-lg shadow-md">
+        <div className="bg-white p-6 rounded-lg shadow-md">
           <div className="w-40 h-40 mb-4">
-            <img className="w-full h-full" src={job?.logo} alt="img" />
+            <img className="w-full h-full border" src={job?.logo} alt="img" />
           </div>
-          <h1 className="text-3xl font-semibold mb-4">{job.title}</h1>
-          <p className="text-gray-600 mb-2">
-            Company: {job.company} | Location: {job.location}
+          <h1 className="text-3xl text-slate-600 font-semibold mb-4">{job.title}</h1>
+          <p className=" mb-2 font-medium text-slate-600">
+            Company: {job.company} &nbsp;&nbsp; || &nbsp;&nbsp; Location: {job.location}
           </p>
 
           <div className="mb-6">
-            <h2 className="text-xl font-semibold mb-2">Requirements</h2>
-            <p className="text-gray-700">{job.requirements}</p>
+            <h2 className="text-xl my-2 font-medium text-slate-600">Requirements</h2>
+            <p className="text-slate-500 font-semibold">{job.requirements}</p>
           </div>
         </div>
-
-        {/* Right Side - Application Form */}
         <div className="bg-white p-6 rounded-lg shadow-md">
           {job?.applyForm?.user === userInfo.id ? (
             <>
@@ -70,23 +66,23 @@ const JobDetailsPage = () => {
             </>
           ) : (
             <>
-              <h2 className="text-2xl font-semibold mb-4">Apply for this Job</h2>
+              <h2 className="text-2xl text-slate-500 font-semibold mb-4">Apply for this Job</h2>
               <form onSubmit={handleSubmit} className="grid gap-4">
                 <input
                   type="text"
                   value={applicantName}
                   onChange={(e) => setApplicantName(e.target.value)}
                   placeholder="Your Name"
-                  className="border rounded-lg py-2 px-3 focus:outline-none focus:border-orange-500"
+                  className="border rounded py-3 px-3 focus:outline-none focus:border-orange-500"
                 />
                 <input
                   type="email"
                   value={applicantEmail}
                   onChange={(e) => setApplicantEmail(e.target.value)}
                   placeholder="Your Email"
-                  className="border rounded-lg py-2 px-3 focus:outline-none focus:border-orange-500"
+                  className="border rounded py-3 px-3 focus:outline-none focus:border-orange-500"
                 />
-                <label className="block text-gray-700">
+                <label className="block font-medium text-gray-600">
                   Upload Resume
                   <input
                     type="file"
@@ -98,7 +94,7 @@ const JobDetailsPage = () => {
                 </label>
                 <button
                   type="submit"
-                  className="bg-orange-500 text-white py-2 px-4 rounded-lg hover:bg-orange-600 transition duration-300"
+                  className="bg-orange-500 font-semibold text-lg text-white py-3 px-4 rounded hover:bg-orange-600 transition duration-300"
                 >
                   Submit Application
                 </button>
@@ -112,16 +108,16 @@ const JobDetailsPage = () => {
           <button
             onClick={() => setopen(false)}
             className={`${
-              open ? "bg-slate-200 hover:bg-slate-300 text-slate-600" : "bg-orange-500 "
-            } w-full py-2 font-medium text-white`}
+              open ? "bg-slate-200 hover:bg-slate-300 text-slate-600" : "bg-orange-500 text-white"
+            } w-full py-2 font-medium `}
           >
             Description
           </button>
           <button
             onClick={() => setopen(true)}
             className={`${
-              open ? "bg-orange-500 " : "bg-slate-200 hover:bg-slate-300 text-slate-600"
-            } w-full py-2 font-medium text-white`}
+              open ? "bg-orange-500 text-white" : "bg-slate-200 hover:bg-slate-300 text-slate-600 "
+            } w-full py-2 font-medium `}
           >
             Benefits
           </button>
@@ -130,14 +126,14 @@ const JobDetailsPage = () => {
           {open ? (
             <>
               <div>
-                <h2 className="text-xl font-semibold mb-2">Job Benefits</h2>
-                <p className="text-gray-700">{job.benefits}</p>
+                <h2 className="text-xl text-slate-600 font-semibold mb-2">Job Benefits</h2>
+                <p className="text-gray-600 font-medium">{job.benefits}</p>
               </div>
             </>
           ) : (
             <div>
-              <h2 className="text-xl font-semibold mb-2">Job Description</h2>
-              <p className="text-gray-700">{job.description}</p>
+              <h2 className="text-xl text-slate-600 font-semibold mb-2">Job Description</h2>
+              <p className="text-gray-600 font-medium">{job.description}</p>
             </div>
           )}
         </div>

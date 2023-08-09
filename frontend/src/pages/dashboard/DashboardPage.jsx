@@ -16,7 +16,7 @@ const DashboardPage = () => {
   }, []);
 
   return (
-    <div className="bg-slate-100  ">
+    <div className="">
       <div className="my-8 w-11/12 mx-auto flex justify-between">
         <div className="bg-slate-400 py-3 px-2 text-white w-1/4 text-center">
           <h3 className="text-2xl">Total Jobs</h3>

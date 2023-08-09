@@ -28,14 +28,14 @@ const Table = () => {
   }, [setPage, page, keyword, setKeyword, count]);
 
   return (
-    <div className="bg-slate-100 dash-table">
+    <div className=" dash-table">
       <div className="flex justify-end w-11/12 mx-auto">
         <div className="bg-white  w-6/12 m- flex justify-end border">
           <SearchBox setKeyword={setKeyword} />
         </div>
       </div>
       <table className="bg-white w-11/12 mx-auto text-center border mt-3">
-        <thead className=" bg-slate-200 py-2">
+        <thead className=" bg-slate-300 py-2">
           <tr className="border">
             <th className="py-2">ID</th>
             <th className="py-2">Title</th>

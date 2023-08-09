@@ -3,26 +3,26 @@ import React from "react";
 const ContactPage = () => {
   return (
     <div className="container mx-auto mt-10 p-5">
-      <h1 className="text-3xl font-semibold mb-4">Contact Us</h1>
+      <h1 className="text-3xl font-semibold mb-4 text-slate-600">Contact Us</h1>
       <p className="text-gray-600 mb-6">
         Have a question or need assistance? Reach out to us using the contact information below.
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <h2 className="text-xl font-medium mb-2">Contact Information</h2>
+          <h2 className="text-xl font-medium mb-2 text-slate-600">Contact Information</h2>
           <p>Email: info@jobportal.com</p>
           <p>Phone: +123-456-7890</p>
           <p>Address: 123 Job Street, City, Country</p>
         </div>
         <div>
-          <h2 className="text-xl font-medium mb-2">Office Hours</h2>
+          <h2 className="text-xl font-medium mb-2 text-slate-600">Office Hours</h2>
           <p>Monday - Friday: 9:00 AM - 5:00 PM</p>
           <p>Saturday: 10:00 AM - 2:00 PM</p>
           <p>Sunday: Closed</p>
         </div>
       </div>
       <div className="mt-10">
-        <h2 className="text-xl font-medium mb-2">Visit Us</h2>
+        <h2 className="text-xl font-medium mb-2 text-slate-600">Visit Us</h2>
         <div className="embed-responsive aspect-w-24 aspect-h-9">
           <iframe
           className="w-1/2 h-52"
@@ -34,7 +34,7 @@ const ContactPage = () => {
         </div>
       </div>
       <div className="mt-10">
-        <h2 className="text-xl font-medium mb-2">Send Us a Message</h2>
+        <h2 className="text-xl font-medium mb-2 text-slate-600">Send Us a Message</h2>
         <form>
           <div className="mb-4">
             <label htmlFor="name" className="block font-medium">
@@ -71,7 +71,7 @@ const ContactPage = () => {
           </div>
           <button
             type="submit"
-            className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300"
+            className="bg-orange-500 text-white py-2 px-6 rounded font-medium text-lg hover:bg-orange-600 transition duration-300"
           >
             Send
           </button>

@@ -14,25 +14,6 @@ const Header = () => {
           </NavLink>
         </div>
         <div className="flex md:flex-row gap-3">
-          {/* <NavLink
-            to={"/"}
-            exact
-            className="text-sm py-2 px-4 font-medium hover:text-yellow-300 transition duration-300"
-          >
-            Home
-          </NavLink> */}
-          <NavLink
-            to={"/about"}
-            className="text-sm py-2 px-2 font-medium hover:text-yellow-300 transition duration-300"
-          >
-            About
-          </NavLink>
-          <NavLink
-            to={"/faq"}
-            className="text-sm py-2 px-2 font-medium hover:text-yellow-300 transition duration-300"
-          >
-            FAQ
-          </NavLink>
           <NavLink
             to={"/contact"}
             className="text-sm py-2 px-2 font-medium hover:text-yellow-300 transition duration-300"

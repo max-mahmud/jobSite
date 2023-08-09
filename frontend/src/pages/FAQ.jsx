@@ -50,7 +50,7 @@ const FaqPage = () => {
                 className="flex justify-between items-center w-full text-lg font-semibold focus:outline-none"
                 onClick={() => toggleAccordion(index)}
               >
-                <span className="text-orange-600">{faq.question}</span>
+                <span className="text-slate-600">{faq.question}</span>
                 <span className="text-orange-600">{expandedIndex === index ? "▲" : "▼"}</span>
               </button>
               {expandedIndex === index && <p className="text-gray-700 mt-2">{faq.answer}</p>}
