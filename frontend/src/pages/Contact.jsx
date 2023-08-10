@@ -1,6 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { add_msg } from "../store/reducers/messageReducer";
 
 const ContactPage = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const dispatch = useDispatch();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    dispatch(add_msg({ name, email, message }));
+
+    setName("");
+    setEmail("");
+    setMessage("");
+  };
+
   return (
     <div className="container mx-auto mt-10 p-5">
       <h1 className="text-3xl font-semibold mb-4 text-slate-600">Contact Us</h1>
@@ -25,7 +42,7 @@ const ContactPage = () => {
         <h2 className="text-xl font-medium mb-2 text-slate-600">Visit Us</h2>
         <div className="embed-responsive aspect-w-24 aspect-h-9">
           <iframe
-          className="w-1/2 h-52"
+            className="w-1/2 h-52"
             title="Google Maps"
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12345.67890123456!2d-123.45678901234567!3d12.345678901234567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTLCsDI4JzA4LjciTiAxMjPCsDAwJzExLjMiVw!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus"
             allowFullScreen
@@ -35,7 +52,7 @@ const ContactPage = () => {
       </div>
       <div className="mt-10">
         <h2 className="text-xl font-medium mb-2 text-slate-600">Send Us a Message</h2>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="name" className="block font-medium">
               Your Name
@@ -43,7 +60,9 @@ const ContactPage = () => {
             <input
               type="text"
               id="name"
-              className="w-full border rounded-lg py-2 px-3 focus:outline-none focus:border-blue-500"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full border rounded-lg py-2 px-3 focus:outline-none focus:border-orange-500"
               placeholder="Your Name"
             />
           </div>
@@ -54,7 +73,9 @@ const ContactPage = () => {
             <input
               type="email"
               id="email"
-              className="w-full border rounded-lg py-2 px-3 focus:outline-none focus:border-blue-500"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full border rounded-lg py-2 px-3 focus:outline-none focus:border-orange-500"
               placeholder="Your Email"
             />
           </div>
@@ -64,7 +85,9 @@ const ContactPage = () => {
             </label>
             <textarea
               id="message"
-              className="w-full border rounded-lg py-2 px-3 focus:outline-none focus:border-blue-500"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              className="w-full border rounded-lg py-2 px-3 focus:outline-none focus:border-orange-500"
               rows="4"
               placeholder="Your Message"
             ></textarea>

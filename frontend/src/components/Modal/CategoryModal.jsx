@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { MdClose } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { single_category, update_category } from "../store/reducers/categoryReducer";
+import { single_category, update_category } from "../../store/reducers/categoryReducer";
 
 const CategoryModal = ({ setOpen, open, cateId }) => {
   const dispatch = useDispatch();

@@ -52,6 +52,12 @@ exports.login = async (req, res) => {
   }
 };
 
+exports.logout = async (req, res, next) => {
+  res.cookie("token", null, {
+    expires: new Date(Date.now()),
+    httpOnly: true,
+  });
+};
 exports.getUser = async (req, res) => {
   const users = await userModel.find({});
   return res.status(200).send({ users, userCount: users.length });

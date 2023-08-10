@@ -1,13 +1,27 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink, Navigate, useNavigate } from "react-router-dom";
+import { logout } from "../store/reducers/userReducer";
+import { toast } from "react-toastify";
 
 const Header = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.user);
+  const [local, setLocal] = useState("");
   const role = 1;
 
-  const handleLogout =() => {}
+  const handleLogout = () => {
+    localStorage.removeItem("userToken");
+    setLocal(false);
+    if (!localStorage.getItem("userToken")) {
+      toast.success("logout was successful");
+    }
+  };
 
+  useEffect(() => {
+    setLocal(userInfo);
+  }, [userInfo]);
 
   return (
     <div className="bg-gradient-to-r from-orange-600 to-orange-800 py-4 text-white">
@@ -24,7 +38,7 @@ const Header = () => {
           >
             Contact
           </NavLink>
-          {userInfo ? (
+          {local ? (
             <>
               {role === 1 ? (
                 <>
@@ -45,7 +59,10 @@ const Header = () => {
                   </NavLink>
                 </>
               )}
-              <button onClick={handleLogout} className="bg-red-500 py-2 px-5 text-sm font-medium hover:text-yellow-300 transition duration-300">
+              <button
+                onClick={handleLogout}
+                className="bg-white text-slate-700 py-2 px-5 text-sm font-bold hover:text-orange-400 transition duration-300"
+              >
                 Logout
               </button>
             </>

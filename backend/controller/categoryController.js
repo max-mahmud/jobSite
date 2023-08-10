@@ -93,7 +93,6 @@ exports.singleCategory = async (req, res) => {
   try {
     const { id } = req.params;
     const singleCate = await categoryModel.findById(id);
-    console.log(singleCate);
     res.status(200).send({ singleCate });
   } catch (error) {
     res.status(500).send({

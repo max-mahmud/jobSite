@@ -26,6 +26,7 @@ app.use(express.static("uploads"));
 app.use("/api", require("./routes/jobRoutes"));
 app.use("/api", require("./routes/categoryRoutes"));
 app.use("/api", require("./routes/userRoutes"));
+app.use("/api", require("./routes/messageRoutes"));
 
 // port
 const PORT = process.env.PORT || 4000;

@@ -90,7 +90,7 @@ const HomePage = () => {
                 ))}
               </div>
             </div>
-            <div className="bg-white p-4 mt-4">
+            <div className="bg-white p-4 my-4 ">
               <h3 className="font-semibold text-2xl text-orange-500 mb-4">Sort By Date</h3>
 
               <select
@@ -112,7 +112,7 @@ const HomePage = () => {
           <div className="flex-1 bg-slate-100">
             <div className="min-h-[400px]">
               {loading ? (
-                <div className="flex items-center justify-center min-h-[400px]">
+                <div className="flex items-center justify-center min-h-[70vh]">
                   <HashLoader
                     color={color}
                     size={60}
@@ -145,14 +145,16 @@ const HomePage = () => {
                   </div>
                 ))
               ) : (
-                <div className="mt-4">
-                  <h2 className="text-center text-4xl text-slate-500 font-medium">No Data Found</h2>
+                <div className="mt-5 min-h-[69vh] bg-white flex justify-center items-center">
+                  <h2 className="text-center text-6xl text-slate-500 font-medium">No Data Found</h2>
                 </div>
               )}
             </div>
-            <div className="ml-4">
-              <MyPagination page={page} setPage={setPage} />
-            </div>
+            {count > 6 && (
+              <div className="ml-4">
+                <MyPagination page={page} setPage={setPage} />
+              </div>
+            )}
           </div>
         </div>
       </div>

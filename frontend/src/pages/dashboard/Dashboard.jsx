@@ -32,6 +32,12 @@ const Dashboard = () => {
             Apply Job
           </NavLink>
           <NavLink
+            className={`${pathname === "/dashboard/message" ? "bg-red-200  " : " "} w-[200px] px-5 py-2`}
+            to="/dashboard/message"
+          >
+            Messages
+          </NavLink>
+          <NavLink
             className={`${pathname === "/dashboard/user" ? "bg-red-200" : ""} w-[200px] px-5 py-2`}
             to="/dashboard/user"
           >

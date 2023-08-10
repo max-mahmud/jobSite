@@ -39,6 +39,16 @@ export const all_user = createAsyncThunk(
   }
 );
 
+export const logout = createAsyncThunk("auth/logout", async (info, { rejectWithValue, fulfillWithValue }) => {
+  try {
+    const { data } = await API.get("/logout", info, { withCredentials: true });
+    localStorage.removeItem("accessToken", data.token);
+    return fulfillWithValue(data);
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+
 const decodeToken = (token) => {
   try {
     const user = jwt(token);
@@ -94,6 +104,10 @@ export const userReducer = createSlice({
     [all_user.fulfilled]: (state, { payload }) => {
       state.userCount = payload.userCount;
       state.users = payload.users;
+    },
+    [logout.fulfilled]: (state, { payload }) => {
+      state.loader = false;
+      state.successMessage = payload.message;
     },
   },
 });

@@ -6,6 +6,7 @@ import MyPagination from "../../components/MyPagination";
 import SearchBox from "../../components/SearchBox";
 import { toast } from "react-toastify";
 import { messageClear } from "../../store/reducers/categoryReducer";
+import { RiDeleteBin5Fill, RiEditBoxLine } from "react-icons/ri";
 
 const Table = () => {
   const dispatch = useDispatch();
@@ -30,7 +31,7 @@ const Table = () => {
   return (
     <div className=" dash-table">
       <div className="flex justify-end w-11/12 mx-auto">
-        <div className="bg-white  w-6/12 m- flex justify-end border">
+        <div className="bg-white w-6/12 flex justify-end border">
           <SearchBox setKeyword={setKeyword} />
         </div>
       </div>
@@ -54,23 +55,25 @@ const Table = () => {
                   <tr className="bg-slate-50 hover:bg-slate-300" key={i + 1}>
                     <td className="py-2">{i + 1}</td>
                     <td className="py-2">{j.title}</td>
-                    <td>{j.description.slice(0,30)}..</td>
+                    <td>{j.description.slice(0, 30)}..</td>
                     <td>{j.salary}</td>
                     <td>{j.location}</td>
                     <td>{j.category.name}</td>
                     <td>
                       <NavLink
                         to={`/dashboard/editjob/${j._id}`}
-                        className="py-1 text-white hover:bg-orange-600 px-3  bg-orange-500 mr-2"
+                        className="py-1 text-white hover:bg-orange-600 px-2 text-lg  bg-orange-500 mr-2"
                       >
-                        E
+                        <button>
+                          <RiEditBoxLine />
+                        </button>
                       </NavLink>
-                      <NavLink
+                      <button
                         onClick={() => handleDeleteJob(j._id)}
-                        className="py-1 text-white hover:bg-orange-600 px-3 bg-orange-500"
+                        className="py-[7px] text-white hover:bg-orange-600 text-lg px-2 bg-orange-500"
                       >
-                        D
-                      </NavLink>
+                        <RiDeleteBin5Fill />
+                      </button>
                     </td>
                   </tr>
                 );

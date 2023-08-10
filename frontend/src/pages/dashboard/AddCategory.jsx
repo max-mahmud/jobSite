@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { add_category, delete_category, get_category } from "../../store/reducers/categoryReducer";
-import CategoryModal from "../../components/CategoryModal";
+import CategoryModal from "../../components/Modal/CategoryModal";
+import { RiDeleteBin5Fill, RiEditBoxLine } from "react-icons/ri";
 
 const AddCategory = () => {
   const dispatch = useDispatch();
@@ -64,16 +65,16 @@ const AddCategory = () => {
                         <td>
                           <button
                             onClick={() => handleEdit(j._id)}
-                            className="py-1 mr-3 text-white hover:bg-orange-600 px-3 bg-orange-500"
+                            className="py-2 mr-3 text-lg text-white hover:bg-orange-600 px-2 bg-orange-500"
                           >
-                            E
+                            <RiEditBoxLine />
                           </button>
 
                           <button
                             onClick={() => dispatch(delete_category(j._id))}
-                            className="py-1 text-white hover:bg-orange-600 px-3 bg-orange-500"
+                            className="py-2 text-lg text-white hover:bg-orange-600 px-2 bg-orange-500"
                           >
-                            D
+                            <RiDeleteBin5Fill />
                           </button>
                         </td>
                       </tr>

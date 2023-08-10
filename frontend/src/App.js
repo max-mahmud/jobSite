@@ -18,6 +18,7 @@ import ContactPage from "./pages/Contact";
 import FaqPage from "./pages/FAQ";
 import ApplyJob from "./pages/dashboard/ApplyJob";
 import AddCategory from "./pages/dashboard/AddCategory";
+import Message from "./pages/dashboard/Message";
 
 const App = () => {
   return (
@@ -40,6 +41,7 @@ const App = () => {
             <Route path="add-category" element={<AddCategory />} />
             <Route path="applyjob" element={<ApplyJob />} />
             <Route path="editjob/:id" element={<EditJob />} />
+            <Route path="message" element={<Message />} />
             <Route path="user" element={<User />} />
           </Route>
         </Route>
