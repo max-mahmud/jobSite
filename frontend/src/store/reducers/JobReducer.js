@@ -16,6 +16,18 @@ export const get_jobs = createAsyncThunk(
     }
   }
 );
+//get all job count
+export const all_job_count = createAsyncThunk(
+  "job/all_job_count",
+  async (_, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const { data } = await API.get("/all-job-count");
+      return fulfillWithValue(data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 export const add_jobs = createAsyncThunk(
   "job/add_jobs",
@@ -157,6 +169,7 @@ export const jobReducer = createSlice({
     allApplyCount: 0,
     tableJobs: [],
     count: 0,
+    allCount: 0,
     pages: 0,
     page: 0,
     loading: false,
@@ -227,6 +240,9 @@ export const jobReducer = createSlice({
     [get_all_apply_job.fulfilled]: (state, { payload }) => {
       state.allApplyCount = payload.applyCount;
       state.allApplyjob = payload.allApplyJob;
+    },
+    [all_job_count.fulfilled]: (state, { payload }) => {
+      state.allCount = payload.allCount;
     },
   },
 });

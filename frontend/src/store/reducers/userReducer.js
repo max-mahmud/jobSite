@@ -52,6 +52,31 @@ export const logout = createAsyncThunk(
   }
 );
 
+//single user details
+export const user_details = createAsyncThunk(
+  "auth/user_details",
+  async (id, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const { data } = await API.get(`/user-details/${id}`);
+      return fulfillWithValue(data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+//update user details
+export const user_update = createAsyncThunk(
+  "auth/user_update",
+  async ({ id, info }, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const { data } = await API.put(`/user-update/${id}`, info);
+      return fulfillWithValue(data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const decodeToken = (token) => {
   try {
     const user = jwt(token);
@@ -65,6 +90,8 @@ export const userReducer = createSlice({
   name: "user",
   initialState: {
     userInfo: decodeToken(localStorage.getItem("userToken")),
+    userDetails: "",
+    applyJobs: [],
     userCount: "",
     users: [],
     successMessage: "",
@@ -112,6 +139,20 @@ export const userReducer = createSlice({
       state.loader = false;
       state.successMessage = payload.message;
       state.userInfo = payload.token;
+    },
+    [user_details.pending]: (state, { payload }) => {
+      state.loading = true;
+    },
+    [user_details.fulfilled]: (state, { payload }) => {
+      state.userDetails = payload.user;
+      state.applyJobs = payload.applyJobs;
+      state.loading = false;
+    },
+    [user_details.rejected]: (state, { payload }) => {
+      state.loading = false;
+    },
+    [user_update.fulfilled]: (state, { payload }) => {
+      state.successMessage = payload.message;
     },
   },
 });

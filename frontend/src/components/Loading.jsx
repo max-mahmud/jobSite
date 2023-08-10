@@ -1,13 +1,24 @@
-import React from "react";
-import { MoonLoader } from "react-spinners";
+import React, { useState } from "react";
+import HashLoader from "react-spinners/HashLoader";
 
 const Loading = () => {
+  let [color, setColor] = useState("#EC8422");
+
+  const override = {
+    display: "block",
+    margin: "0 auto",
+    borderColor: "red",
+  };
+
   return (
-    <div className="w-full min-h-screen absolute top-0 right-0 left-0 bottom-0 bg-slate-400 flex justify-center items-center">
-      <div className="flex flex-col items-center">
-        <MoonLoader color="#AF6606" size={60} />
-        <h4 className="mt-4 text-white text-lg font-semibold">Loading...</h4>
-      </div>
+    <div className="w-full h-full  bg-slate-100 flex justify-center items-center">
+      <HashLoader
+        color={color}
+        size={60}
+        cssOverride={override}
+        aria-label="Loading Spinner"
+        data-testid="loader"
+      />
     </div>
   );
 };

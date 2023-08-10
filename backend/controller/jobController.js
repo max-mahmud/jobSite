@@ -301,3 +301,13 @@ exports.deleteApplyForm = async (req, res) => {
     return res.status(500).json({ error: "Error deleting form." });
   }
 };
+
+//all job count
+exports.allJobCount = async (req, res) => {
+  try {
+    const allCount = await jobModel.find({}).countDocuments();
+    return res.status(200).json({ allCount: allCount });
+  } catch (error) {
+    console.log(error);
+  }
+};

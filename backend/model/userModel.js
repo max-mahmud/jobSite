@@ -21,6 +21,18 @@ const userSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    contact: {
+      type: String,
+      default: "no contact",
+    },
+    address: {
+      type: String,
+      default: "no address",
+    },
+    skill: {
+      type: String,
+      default: "no skill",
+    },
   },
   { timestamps: true }
 );

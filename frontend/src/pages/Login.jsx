@@ -51,7 +51,7 @@ const Login = () => {
             <input
               type="email"
               id="Email"
-              className="w-full px-3 py-2 border border-slate-200 outline-none focus:border-indigo-500 rounded-md"
+              className="w-full px-3 py-2 border border-slate-200 outline-none focus:border-orange-500 rounded-md"
               name="email"
               onChange={inputHandle}
               value={state.email}
@@ -63,7 +63,7 @@ const Login = () => {
             <input
               type="password"
               id="Password"
-              className="w-full px-3 py-2 border border-slate-200 outline-none focus:border-indigo-500 rounded-md"
+              className="w-full px-3 py-2 border border-slate-200 outline-none focus:border-orange-500 rounded-md"
               name="password"
               onChange={inputHandle}
               value={state.password}

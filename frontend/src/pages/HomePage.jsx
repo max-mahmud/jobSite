@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { get_category } from "../store/reducers/categoryReducer";
 import { get_jobs } from "../store/reducers/JobReducer";
-import HashLoader from "react-spinners/HashLoader";
 import MyPagination from "../components/MyPagination";
 import { NavLink } from "react-router-dom";
 import Banner from "../components/Banner";
 import { MdAddLocationAlt } from "react-icons/md";
 import { ImPlus } from "react-icons/im";
+import Loading from "../components/Loading";
 
 const HomePage = () => {
   const { categorys } = useSelector((state) => state.cate);
@@ -113,13 +113,7 @@ const HomePage = () => {
             <div className="min-h-[400px]">
               {loading ? (
                 <div className="flex items-center justify-center min-h-[70vh]">
-                  <HashLoader
-                    color={color}
-                    size={60}
-                    cssOverride={override}
-                    aria-label="Loading Spinner"
-                    data-testid="loader"
-                  />
+                 <Loading />
                 </div>
               ) : jobs.length > 0 ? (
                 jobs?.map((job, i) => (
