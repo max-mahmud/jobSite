@@ -6,7 +6,6 @@ import { apply_job, single_job } from "../store/reducers/JobReducer";
 const JobDetailsPage = () => {
   const [open, setopen] = useState(false);
   const { id } = useParams();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { job, loading } = useSelector((state) => state.job);
   const { userInfo } = useSelector((state) => state.user);

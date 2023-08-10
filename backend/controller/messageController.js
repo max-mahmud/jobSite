@@ -1,9 +1,10 @@
 const msgModel = require("../model/messaeModel");
 
 exports.createMsg = async (req, res, next) => {
-  const { name, email, message } = req.body;
+  const { name, email, message, userId } = req.body;
+  console.log(req.body);
   try {
-    const newMsg = await msgModel.create({ name: name, email: email, message: message });
+    const newMsg = await msgModel.create({ name: name, email: email, message: message, user: userId });
     return res.status(200).json({ message: "success message", newMsg: newMsg });
   } catch (error) {
     console.log(error);
@@ -22,7 +23,7 @@ exports.deleteMsg = async (req, res, next) => {
 
 exports.getAllMsg = async (req, res, next) => {
   try {
-    const allMsg = await msgModel.find({}).limit(12).sort({ createdAt: -1 });
+    const allMsg = await msgModel.find({}).limit(12).sort({ createdAt: -1 }).populate("user");
     return res.status(200).json({ mesages: allMsg });
   } catch (error) {
     console.log(error.message);

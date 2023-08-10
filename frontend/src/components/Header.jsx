@@ -3,25 +3,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Navigate, useNavigate } from "react-router-dom";
 import { logout } from "../store/reducers/userReducer";
 import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.user);
-  const [local, setLocal] = useState("");
-  const role = 1;
 
   const handleLogout = () => {
-    localStorage.removeItem("userToken");
-    setLocal(false);
-    if (!localStorage.getItem("userToken")) {
-      toast.success("logout was successful");
-    }
+    const token = localStorage.getItem("userToken");
+    // const userToken = Cookies.get("accessToken");
+    dispatch(logout({ token: token }));
   };
-
-  useEffect(() => {
-    setLocal(userInfo);
-  }, [userInfo]);
 
   return (
     <div className="bg-gradient-to-r from-orange-600 to-orange-800 py-4 text-white">
@@ -33,14 +26,26 @@ const Header = () => {
         </div>
         <div className="flex md:flex-row gap-3">
           <NavLink
+            to={"/about"}
+            className="text-sm py-2 px-2 font-medium hover:text-yellow-300 transition duration-300"
+          >
+            About
+          </NavLink>
+          <NavLink
             to={"/contact"}
             className="text-sm py-2 px-2 font-medium hover:text-yellow-300 transition duration-300"
           >
             Contact
           </NavLink>
-          {local ? (
+          <NavLink
+            to={"/faq"}
+            className="text-sm py-2 px-2 font-medium hover:text-yellow-300 transition duration-300"
+          >
+            FAQ
+          </NavLink>
+          {userInfo ? (
             <>
-              {role === 1 ? (
+              {userInfo.role === 1 ? (
                 <>
                   <NavLink
                     className="text-sm py-2 px-2 font-medium hover:text-yellow-300 transition duration-300"
@@ -61,7 +66,7 @@ const Header = () => {
               )}
               <button
                 onClick={handleLogout}
-                className="bg-white text-slate-700 py-2 px-5 text-sm font-bold hover:text-orange-400 transition duration-300"
+                className="bg-white rounded text-slate-700 py-2 px-5 text-sm font-bold hover:text-orange-400 transition duration-300"
               >
                 Logout
               </button>
@@ -89,21 +94,3 @@ const Header = () => {
 };
 
 export default Header;
-
-// const Header = () => {
-
-//   return (
-//     <div className=" bg-orange-700 py-4 text-yellow-50">
-//       <div className="container mx-auto flex justify-between">
-//         <div>
-//           <NavLink to={"/"}>Home</NavLink>
-//         </div>
-//         <div className="flex justify-end gap-5">
-
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Header;

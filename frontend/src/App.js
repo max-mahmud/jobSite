@@ -29,9 +29,9 @@ const App = () => {
         <Route path="/profile" element={<Profile />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        {/* <Route path="/about" element={<AboutPage />} /> */}
+        <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
-        {/* <Route path="/faq" element={<FaqPage />} /> */}
+        <Route path="/faq" element={<FaqPage />} />
         <Route path="/jobdetails/:id" element={<JobDetails />} />
 
         <Route path="/dashboard" element={<ProtechUser />}>

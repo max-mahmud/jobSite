@@ -227,25 +227,6 @@ exports.tableJobs = async (req, res, next) => {
   }
 };
 
-// export const realtedProductController = async (req, res) => {
-//   try {
-//     const { pid, cid } = req.params;
-//     const products = await productModel
-//       .find({
-//         category: cid,
-//         _id: { $ne: pid },
-//       })
-//       .select("-photo")
-//       .limit(3)
-//       .populate("category");
-
-//     res.status(200).send({
-//       success: true,
-//       products,
-//     });
-
-// };
-
 // create new application form
 exports.applyForm = async (req, res) => {
   const form = new formidable.IncomingForm();

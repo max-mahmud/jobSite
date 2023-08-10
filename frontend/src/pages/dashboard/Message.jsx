@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { delete_msg, get_msg } from "../../store/reducers/messageReducer";
 import { RiDeleteBin5Fill } from "react-icons/ri";
@@ -6,7 +6,6 @@ import { RiDeleteBin5Fill } from "react-icons/ri";
 const Message = () => {
   const dispatch = useDispatch();
   const { msgs } = useSelector((state) => state.msg);
-  const [ID, setID] = useState("");
   useEffect(() => {
     dispatch(get_msg());
   }, [delete_msg, msgs, dispatch]);

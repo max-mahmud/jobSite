@@ -39,15 +39,18 @@ export const all_user = createAsyncThunk(
   }
 );
 
-export const logout = createAsyncThunk("auth/logout", async (info, { rejectWithValue, fulfillWithValue }) => {
-  try {
-    const { data } = await API.get("/logout", info, { withCredentials: true });
-    localStorage.removeItem("accessToken", data.token);
-    return fulfillWithValue(data);
-  } catch (error) {
-    return rejectWithValue(error.response.data);
+export const logout = createAsyncThunk(
+  "auth/logout",
+  async ({ token }, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const { data } = await API.get("/logout", { token }, { withCredentials: true });
+      localStorage.removeItem("userToken");
+      return fulfillWithValue(data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
-});
+);
 
 const decodeToken = (token) => {
   try {
@@ -108,6 +111,7 @@ export const userReducer = createSlice({
     [logout.fulfilled]: (state, { payload }) => {
       state.loader = false;
       state.successMessage = payload.message;
+      state.userInfo = payload.token;
     },
   },
 });

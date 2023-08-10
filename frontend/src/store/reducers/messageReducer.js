@@ -14,9 +14,9 @@ export const get_msg = createAsyncThunk("cate/get_msg", async (_, { rejectWithVa
 //add msg
 export const add_msg = createAsyncThunk(
   "msg/add_msg",
-  async ({ name, email, message }, { fulfillWithValue, rejectWithValue }) => {
+  async ({ name, email, message, userId }, { fulfillWithValue, rejectWithValue }) => {
     try {
-      const { data } = await API.post("/create-msg", { name, email, message });
+      const { data } = await API.post("/create-msg", { name, email, message, userId });
       return fulfillWithValue(data);
     } catch (error) {
       return rejectWithValue(error.response.data);
