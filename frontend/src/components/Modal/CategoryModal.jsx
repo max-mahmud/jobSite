@@ -12,16 +12,14 @@ const CategoryModal = ({ setOpen, open, cateId }) => {
   const handleEditCategory = (e) => {
     e.preventDefault();
     dispatch(update_category({ id: cateId, category: categoryName }));
-    setTimeout(() => {
-      setOpen(!open);
-    }, 300);
+    setOpen(!open);
   };
 
   useEffect(() => {
     dispatch(single_category({ id: cateId }));
 
     setCategoryName(category.name);
-  }, [single_category, cateId, category.name]);
+  }, [dispatch, cateId, category.name]);
 
   return (
     <div className="flex items-center justify-center min-h-[60vh] m-5 p-5">

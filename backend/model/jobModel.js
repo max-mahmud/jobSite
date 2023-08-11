@@ -51,6 +51,5 @@ const jobSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// company, requirements, benefits, logo
 
 module.exports = mongoose.model("JobDetails", jobSchema);

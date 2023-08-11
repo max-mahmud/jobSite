@@ -71,6 +71,7 @@ export const category = createSlice({
   initialState: {
     categorys: [],
     category: "",
+    loading: false,
     errorMessage: "",
     successMessage: "",
   },
@@ -81,11 +82,33 @@ export const category = createSlice({
     },
   },
   extraReducers: {
+    // [get_category.pending]: (state, { payload }) => {
+    //   state.loading = true;
+    // },
     [get_category.fulfilled]: (state, { payload }) => {
       state.categorys = payload.category;
+      state.loading = false;
     },
     [single_category.fulfilled]: (state, { payload }) => {
       state.category = payload.singleCate;
+    },
+    [add_category.pending]: (state, { payload }) => {
+      state.loading = true;
+    },
+    [add_category.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+    },
+    [delete_category.pending]: (state, { payload }) => {
+      state.loading = true;
+    },
+    [delete_category.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+    },
+    [update_category.pending]: (state, { payload }) => {
+      state.loading = true;
+    },
+    [update_category.fulfilled]: (state, { payload }) => {
+      state.loading = false;
     },
   },
 });

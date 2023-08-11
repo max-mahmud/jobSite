@@ -10,7 +10,7 @@ const AddJob = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { job, loading } = useSelector((state) => state.job);
+  const { job, loading, successMessage, errorMessage } = useSelector((state) => state.job);
   const { categorys } = useSelector((state) => state.cate);
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
@@ -30,12 +30,6 @@ const AddJob = () => {
     dispatch(
       update_job({ title, description, salary, location, company, requirements, benefits, category: cat, id })
     );
-    // toast.success("Job Updated successfully");
-    // if (loading) {
-    //   return null;
-    // } else {
-    //   navigate("/dashboard");
-    // }
   };
 
   useEffect(() => {
@@ -53,7 +47,7 @@ const AddJob = () => {
     setRequirements(job.requirements);
 
     dispatch(single_job({ id }));
-  }, [id, job.logo]);
+  }, [job.logo]);
 
   const changeImage = (files) => {
     if (files.length > 0) {
@@ -67,170 +61,188 @@ const AddJob = () => {
     setLogo(files[0]);
   };
 
+  useEffect(() => {
+    if (successMessage) {
+      toast.success(successMessage);
+      dispatch(messageClear());
+    }
+    if (errorMessage) {
+      toast.error(errorMessage);
+      dispatch(messageClear());
+    }
+  }, [successMessage, errorMessage]);
+
   return (
     <div className="h-[100vh]">
-      <form
-        onSubmit={handleSubmit}
-        className=" p-4 my-5 w-[97%] mx-auto bg-white gap-3 justify-center items-center"
-      >
-        <div className="w-20 h-20 mx-auto mb-3">
-          <img
-            className=" w-full object-cover border"
-            src={logo ? URL.createObjectURL(logo) : job.logo}
-            alt="img"
-          />
-        </div>
-        <div className="flex">
-          <div className="flex flex-col w-full">
-            <div className="flex flex-col p-2 gap-2 w-full">
-              <label className="text-xl text-orange-500" htmlFor="title">
-                Title
-              </label>
-              <input
-                className="w-full outline-none bg-slate-100 py-2 px-4 rounded-md focus:bg-gray-100"
-                type="text"
-                id="title"
-                name="title"
-                placeholder="Please Enter Title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-            </div>
-            <div className="flex flex-col p-2 gap-2 w-full">
-              <label className="text-xl text-orange-500" htmlFor="description">
-                Description
-              </label>
-              <textarea
-                className="w-full outline-none bg-slate-100 py-2 px-4 rounded-md focus:bg-gray-100"
-                type="text"
-                id="description"
-                name="description"
-                placeholder="Please Enter Description"
-                value={description}
-                cols="30"
-                rows="3"
-                onChange={(e) => setDescription(e.target.value)}
-              ></textarea>
-            </div>
-            <div className="flex flex-col p-2 gap-2 w-full">
-              <label className="text-xl text-orange-500" htmlFor="category">
-                Category
-              </label>
-              <select
-                onChange={(e) => setCat(e.target.value)}
-                className="w-full outline-none bg-slate-100 py-2 px-4 rounded-md focus:bg-gray-100"
-                name="category"
-                id="category"
-              >
-                <option className="bg-orange-300" value="">
-                  Select Category
-                </option>
-                {categorys?.map((c, i) => {
-                  return (
-                    <option className="bg-orange-300" value={c._id} key={i + 1}>
-                      {c.name}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
+      {loading ? (
+        <>
+          <div className=" w-11/12 mx-auto h-[90vh] mt-2 flex justify-center items-center">
+            <Loading />
+          </div>
+        </>
+      ) : (
+        <form
+          onSubmit={handleSubmit}
+          className=" p-4 my-5 w-[97%] mx-auto bg-white gap-3 justify-center items-center"
+        >
+          <div className="w-20 h-20 mx-auto mb-3">
+            <img
+              className=" w-full object-cover border"
+              src={logo ? URL.createObjectURL(logo) : job.logo}
+              alt="img"
+            />
+          </div>
+          <div className="flex">
+            <div className="flex flex-col w-full">
+              <div className="flex flex-col p-2 gap-2 w-full">
+                <label className="text-xl text-orange-500" htmlFor="title">
+                  Title
+                </label>
+                <input
+                  className="w-full outline-none bg-slate-100 py-2 px-4 rounded-md focus:bg-gray-100"
+                  type="text"
+                  id="title"
+                  name="title"
+                  placeholder="Please Enter Title"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+              </div>
+              <div className="flex flex-col p-2 gap-2 w-full">
+                <label className="text-xl text-orange-500" htmlFor="description">
+                  Description
+                </label>
+                <textarea
+                  className="w-full outline-none bg-slate-100 py-2 px-4 rounded-md focus:bg-gray-100"
+                  type="text"
+                  id="description"
+                  name="description"
+                  placeholder="Please Enter Description"
+                  value={description}
+                  cols="30"
+                  rows="3"
+                  onChange={(e) => setDescription(e.target.value)}
+                ></textarea>
+              </div>
+              <div className="flex flex-col p-2 gap-2 w-full">
+                <label className="text-xl text-orange-500" htmlFor="category">
+                  Category
+                </label>
+                <select
+                  onChange={(e) => setCat(e.target.value)}
+                  className="w-full outline-none bg-slate-100 py-2 px-4 rounded-md focus:bg-gray-100"
+                  name="category"
+                  id="category"
+                >
+                  <option className="bg-orange-300" value="">
+                    Select Category
+                  </option>
+                  {categorys?.map((c, i) => {
+                    return (
+                      <option className="bg-orange-300" value={c._id} key={i + 1}>
+                        {c.name}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
 
-            <div className="flex flex-col p-2 gap-2 w-full">
-              <label className="text-xl text-orange-500" htmlFor="salary">
-                Salary
-              </label>
-              <input
-                className="w-full outline-none bg-slate-100 py-2 px-4 rounded-md focus:bg-gray-100"
-                type="text"
-                id="salary"
-                name="salary"
-                placeholder="Please Enter Salary"
-                value={salary}
-                onChange={(e) => setSalary(e.target.value)}
-              />
+              <div className="flex flex-col p-2 gap-2 w-full">
+                <label className="text-xl text-orange-500" htmlFor="salary">
+                  Salary
+                </label>
+                <input
+                  className="w-full outline-none bg-slate-100 py-2 px-4 rounded-md focus:bg-gray-100"
+                  type="text"
+                  id="salary"
+                  name="salary"
+                  placeholder="Please Enter Salary"
+                  value={salary}
+                  onChange={(e) => setSalary(e.target.value)}
+                />
+              </div>
+              <div className="flex flex-col p-2 gap-2 w-full">
+                <label className="text-xl text-orange-500" htmlFor="location">
+                  Location
+                </label>
+                <input
+                  className="w-full outline-none bg-slate-100 py-2 px-4 rounded-md focus:bg-gray-100"
+                  type="text"
+                  id="location"
+                  name="location"
+                  placeholder="Please Enter Location"
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                />
+              </div>
             </div>
-            <div className="flex flex-col p-2 gap-2 w-full">
-              <label className="text-xl text-orange-500" htmlFor="location">
-                Location
-              </label>
-              <input
-                className="w-full outline-none bg-slate-100 py-2 px-4 rounded-md focus:bg-gray-100"
-                type="text"
-                id="location"
-                name="location"
-                placeholder="Please Enter Location"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-              />
+            <div className="flex flex-col w-full">
+              <div className="flex  flex-col p-2 gap-2 w-full">
+                <label className="text-xl text-orange-400 " htmlFor="company">
+                  Company
+                </label>
+                <input
+                  className="w-full outline-orange-300 bg-slate-100  py-2 px-4"
+                  type="text"
+                  id="company"
+                  name="company"
+                  placeholder="Please Enter Company"
+                  value={company}
+                  onChange={(e) => setCompany(e.target.value)}
+                />
+              </div>
+              <div className="flex  flex-col p-2 gap-2 w-full">
+                <label className="text-xl text-orange-400 " htmlFor="requirements">
+                  Requirements
+                </label>
+                <textarea
+                  className="w-full outline-orange-300 bg-slate-100  py-2 px-4"
+                  type="text"
+                  id="requirements"
+                  name="requirements"
+                  placeholder="Please Enter Requirements"
+                  value={requirements}
+                  cols="30"
+                  rows="3"
+                  onChange={(e) => setRequirements(e.target.value)}
+                ></textarea>
+              </div>
+              <div className="flex  flex-col p-2 gap-2 w-full">
+                <label className="text-xl text-orange-400 " htmlFor="benefits">
+                  Benefits
+                </label>
+                <textarea
+                  className="w-full outline-orange-300 bg-slate-100  py-2 px-4"
+                  type="text"
+                  id="benefits"
+                  name="benefits"
+                  placeholder="Please Enter Benefits"
+                  value={benefits}
+                  cols="30"
+                  rows="3"
+                  onChange={(e) => setBenefits(e.target.value)}
+                ></textarea>
+              </div>
+              <div className="flex  flex-col p-2 gap-2 w-full">
+                <label className="text-xl text-orange-400 " htmlFor="logo">
+                  Logo
+                </label>
+                <input
+                  type="file"
+                  accept=".jpg,.jpeg,.png"
+                  onChange={(e) => changeImage(e.target.files)}
+                  className="w-full outline-orange-300 bg-slate-100 py-2 px-4"
+                  id="logo"
+                  name="logo"
+                />
+              </div>
             </div>
           </div>
-          <div className="flex flex-col w-full">
-            <div className="flex  flex-col p-2 gap-2 w-full">
-              <label className="text-xl text-orange-400 " htmlFor="company">
-                Company
-              </label>
-              <input
-                className="w-full outline-orange-300 bg-slate-100  py-2 px-4"
-                type="text"
-                id="company"
-                name="company"
-                placeholder="Please Enter Company"
-                value={company}
-                onChange={(e) => setCompany(e.target.value)}
-              />
-            </div>
-            <div className="flex  flex-col p-2 gap-2 w-full">
-              <label className="text-xl text-orange-400 " htmlFor="requirements">
-                Requirements
-              </label>
-              <textarea
-                className="w-full outline-orange-300 bg-slate-100  py-2 px-4"
-                type="text"
-                id="requirements"
-                name="requirements"
-                placeholder="Please Enter Requirements"
-                value={requirements}
-                cols="30"
-                rows="3"
-                onChange={(e) => setRequirements(e.target.value)}
-              ></textarea>
-            </div>
-            <div className="flex  flex-col p-2 gap-2 w-full">
-              <label className="text-xl text-orange-400 " htmlFor="benefits">
-                Benefits
-              </label>
-              <textarea
-                className="w-full outline-orange-300 bg-slate-100  py-2 px-4"
-                type="text"
-                id="benefits"
-                name="benefits"
-                placeholder="Please Enter Benefits"
-                value={benefits}
-                cols="30"
-                rows="3"
-                onChange={(e) => setBenefits(e.target.value)}
-              ></textarea>
-            </div>
-            <div className="flex  flex-col p-2 gap-2 w-full">
-              <label className="text-xl text-orange-400 " htmlFor="logo">
-                Logo
-              </label>
-              <input
-                type="file"
-                accept=".jpg,.jpeg,.png"
-                onChange={(e) => changeImage(e.target.files)}
-                className="w-full outline-orange-300 bg-slate-100 py-2 px-4"
-                id="logo"
-                name="logo"
-              />
-            </div>
+          <div className="flex  flex-col p-2 gap-2 w-full">
+            <button className="bg-orange-500 py-2 px-4 text-center text-white">Add Job</button>
           </div>
-        </div>
-        <div className="flex  flex-col p-2 gap-2 w-full">
-          <button className="bg-orange-500 py-2 px-4 text-center text-white">Add Job</button>
-        </div>
-      </form>
-      {/* {loading && <Loading />} */}
+        </form>
+      )}
     </div>
   );
 };

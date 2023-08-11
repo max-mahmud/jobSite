@@ -11,7 +11,7 @@ const Loading = () => {
   };
 
   return (
-    <div className="w-full h-full  bg-slate-100 flex justify-center items-center">
+    <div className="w-full h-full  bg-[#FFFFFF73] flex justify-center items-center">
       <HashLoader
         color={color}
         size={60}

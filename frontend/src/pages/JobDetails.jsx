@@ -65,53 +65,61 @@ const JobDetailsPage = () => {
             </div>
           ) : (
             <>
-              {job?.applyForm?.user === userInfo.id ? (
+              {userInfo ? (
                 <>
-                  <div className="bg-gray-100 p-4 rounded-lg">
-                    <h2 className="text-xl font-semibold mb-2">
-                      You have already submitted an application for this job.
-                    </h2>
-                    <p className="text-gray-600">
-                      Thank you for your interest in this position. Your application is being reviewed.
-                    </p>
-                  </div>
+                  {job?.applyForm?.user === userInfo?.id ? (
+                    <>
+                      <div className="bg-gray-100 p-4 rounded-lg">
+                        <h2 className="text-xl font-semibold mb-2">
+                          You have already submitted an application for this job.
+                        </h2>
+                        <p className="text-gray-600">
+                          Thank you for your interest in this position. Your application is being reviewed.
+                        </p>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <h2 className="text-2xl text-slate-500 font-semibold mb-4">Apply for this Job</h2>
+                      <form onSubmit={handleSubmit} className="grid gap-4">
+                        <input
+                          type="text"
+                          value={applicantName}
+                          onChange={(e) => setApplicantName(e.target.value)}
+                          placeholder="Your Name"
+                          className="border rounded py-3 px-3 focus:outline-none focus:border-orange-500"
+                        />
+                        <input
+                          type="email"
+                          value={applicantEmail}
+                          onChange={(e) => setApplicantEmail(e.target.value)}
+                          placeholder="Your Email"
+                          className="border rounded py-3 px-3 focus:outline-none focus:border-orange-500"
+                        />
+                        <label className="block font-medium text-gray-600">
+                          Upload Resume
+                          <input
+                            type="file"
+                            onChange={(e) => setApplicantResume(e.target.files[0])}
+                            className="mt-1"
+                            accept=".pdf,.doc,.docx"
+                            required
+                          />
+                        </label>
+                        <button
+                          type="submit"
+                          className="bg-orange-500 font-semibold text-lg text-white py-3 px-4 rounded hover:bg-orange-600 transition duration-300"
+                        >
+                          Submit Application
+                        </button>
+                      </form>
+                    </>
+                  )}
                 </>
               ) : (
-                <>
-                  <h2 className="text-2xl text-slate-500 font-semibold mb-4">Apply for this Job</h2>
-                  <form onSubmit={handleSubmit} className="grid gap-4">
-                    <input
-                      type="text"
-                      value={applicantName}
-                      onChange={(e) => setApplicantName(e.target.value)}
-                      placeholder="Your Name"
-                      className="border rounded py-3 px-3 focus:outline-none focus:border-orange-500"
-                    />
-                    <input
-                      type="email"
-                      value={applicantEmail}
-                      onChange={(e) => setApplicantEmail(e.target.value)}
-                      placeholder="Your Email"
-                      className="border rounded py-3 px-3 focus:outline-none focus:border-orange-500"
-                    />
-                    <label className="block font-medium text-gray-600">
-                      Upload Resume
-                      <input
-                        type="file"
-                        onChange={(e) => setApplicantResume(e.target.files[0])}
-                        className="mt-1"
-                        accept=".pdf,.doc,.docx"
-                        required
-                      />
-                    </label>
-                    <button
-                      type="submit"
-                      className="bg-orange-500 font-semibold text-lg text-white py-3 px-4 rounded hover:bg-orange-600 transition duration-300"
-                    >
-                      Submit Application
-                    </button>
-                  </form>
-                </>
+                <div className=" p-4 rounded">
+                  <h2 className="text-2xl font-semibold mb-2">Please Login First To Submit Application</h2>
+                </div>
               )}
             </>
           )}

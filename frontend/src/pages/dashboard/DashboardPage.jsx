@@ -6,9 +6,8 @@ import { all_job_count, get_all_apply_job } from "../../store/reducers/JobReduce
 
 const DashboardPage = () => {
   const dispatch = useDispatch();
-  const { allCount } = useSelector((state) => state.job);
   const { userCount } = useSelector((state) => state.user);
-  const { allApplyCount, loading } = useSelector((state) => state.job);
+  const { allApplyCount, allCount } = useSelector((state) => state.job);
 
   useEffect(() => {
     dispatch(all_user());
@@ -21,15 +20,15 @@ const DashboardPage = () => {
       <div className="my-8 w-11/12 mx-auto flex justify-between">
         <div className="bg-slate-400 py-3 px-2 text-white w-1/4 text-center">
           <h3 className="text-2xl">Total Jobs</h3>
-          <h3 className="text-xl"> { allCount} </h3>
+          <h3 className="text-2xl font-semibold "> {allCount} </h3>
         </div>
         <div className="bg-emerald-500 py-3 px-2 text-white w-1/4 text-center">
           <h3 className="text-2xl">Total User</h3>
-          <h3 className="text-xl">{userCount}</h3>
+          <h3 className="text-2xl font-semibold">{userCount}</h3>
         </div>
         <div className="bg-indigo-600 py-3 px-2 text-white w-1/4 text-center">
           <h3 className="text-2xl">Applied Job</h3>
-          <h3 className="text-xl">{allApplyCount}</h3>
+          <h3 className="text-2xl font-semibold">{allApplyCount}</h3>
         </div>
       </div>
       <Table />

@@ -42,6 +42,7 @@ export const messageReducer = createSlice({
   initialState: {
     msgs: [],
     msg: "",
+    loading: false,
     errorMessage: "",
     successMessage: "",
   },
@@ -52,7 +53,11 @@ export const messageReducer = createSlice({
     },
   },
   extraReducers: {
+    [get_msg.pending]: (state, _) => {
+      state.loading = true;
+    },
     [get_msg.fulfilled]: (state, { payload }) => {
+      state.loading = false;
       state.msgs = payload.mesages;
     },
   },

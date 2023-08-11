@@ -175,9 +175,9 @@ exports.updateLogo = async (req, res) => {
 exports.deleteJob = async (req, res) => {
   try {
     await jobModel.findByIdAndDelete(req.params.id);
-    res.status(200).json({ message: "Job deleted successfully" });
+    return res.status(200).json({ message: "Job deleted successfully" });
   } catch (error) {
-    console.log(error);
+    return res.status(500).json({ success: false, error: "Job Deleted Failed" });
   }
 };
 
@@ -227,12 +227,11 @@ exports.tableJobs = async (req, res, next) => {
   }
 };
 
-// create new application form
+//======== create new application form==========///
 exports.applyForm = async (req, res) => {
   const form = new formidable.IncomingForm();
   form.parse(req, async (err, fields, files) => {
     let { resume } = files;
-    console.log(files?.resume[0]);
     newFileName = Date.now() + files?.resume[0]?.originalFilename;
 
     const newPath = path.join(__dirname, "..", "uploads", newFileName);
@@ -241,7 +240,6 @@ exports.applyForm = async (req, res) => {
         console.error(error);
         return res.status(500).json({ error: "Error copying file." });
       } else {
-        console.log("File uploaded successfully");
         return res.json({ message: "File uploaded successfully." });
       }
     });

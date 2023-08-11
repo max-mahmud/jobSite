@@ -49,25 +49,42 @@ const AddJob = () => {
     formData.append("logo", logo);
 
     dispatch(add_jobs(formData));
-    // toast.success("Job added successfully");
-    // navigate("/dashboard");
+    setTitle("");
+    setDescription("");
+    setLocation("");
+    setSalary(" ");
+    setRequirements("");
+    setBenefits("");
+    setLogo("");
+    setCompany("");
+
+    setTimeout(() => {
+      toast.success("job created successfully");
+    }, 800);
   };
 
   useEffect(() => {
     dispatch(get_category());
-  }, [categorys, title, description, salary, location]);
+  }, [dispatch, categorys, title, description, salary, location]);
 
   const handleLogoChange = (e) => {
     setLogo(e.target.files[0]);
   };
 
   return (
-    <div className="h-[100vh]">
+    <div className="h-[100vh] relative">
+      {loading ? (
+        <div className=" absolute top-0 right-0 bottom-0 left-0 w-[97%]  h-[88vh] mx-auto flex justify-center items-center">
+          <Loading />
+        </div>
+      ) : (
+        ""
+      )}
       <form
         onSubmit={handleSubmit}
         className=" p-4 my-5 w-[97%] mx-auto bg-white gap-3 justify-center items-center"
       >
-        <div className="w-20 h-20 mx-auto mb-3">
+        <div className="w-24 h-24 mx-auto mb-3">
           <img
             className=" w-full object-cover border"
             src={logo ? URL.createObjectURL(logo) : "/image/company.png"}

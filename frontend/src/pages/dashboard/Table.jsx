@@ -11,23 +11,28 @@ import Loading from "./../../components/Loading";
 
 const Table = () => {
   const dispatch = useDispatch();
-  const { tableJobs, successMessage, uniqLocations, count, pages, loading } = useSelector(
-    (state) => state.job
-  );
+  const { tableJobs, count, loading, successMessage, errorMessage } = useSelector((state) => state.job);
   const [page, setPage] = useState(1);
   const [keyword, setKeyword] = useState("");
 
   const handleDeleteJob = (id) => {
     dispatch(delet_job({ id }));
-    if (successMessage) {
-      toast.success(successMessage);
-      // dispatch(messageClear());
-    }
   };
 
   useEffect(() => {
     dispatch(table_jobs({ page, keyword }));
-  }, [setPage, page, keyword, setKeyword, count]);
+  }, [setPage, page, keyword, setKeyword, successMessage]);
+
+  useEffect(() => {
+    if (successMessage) {
+      toast.success(successMessage);
+      dispatch(messageClear());
+    }
+    if (errorMessage) {
+      toast.error(errorMessage);
+      dispatch(messageClear());
+    }
+  }, [successMessage, errorMessage]);
 
   return (
     <div className=" dash-table">

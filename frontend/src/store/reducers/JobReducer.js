@@ -1,6 +1,20 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import API from "../../API/Api";
 
+//add job
+export const add_jobs = createAsyncThunk(
+  "job/add_jobs",
+  async (addjob, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const { data } = await API.post("/create-job", addjob, { withCredentials: true });
+      return fulfillWithValue(data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+//get job
 export const get_jobs = createAsyncThunk(
   "job/get_jobs",
   async ({ page, keyword, cat, location, sort }, { rejectWithValue, fulfillWithValue }) => {
@@ -16,6 +30,7 @@ export const get_jobs = createAsyncThunk(
     }
   }
 );
+
 //get all job count
 export const all_job_count = createAsyncThunk(
   "job/all_job_count",
@@ -29,18 +44,7 @@ export const all_job_count = createAsyncThunk(
   }
 );
 
-export const add_jobs = createAsyncThunk(
-  "job/add_jobs",
-  async (addjob, { rejectWithValue, fulfillWithValue }) => {
-    try {
-      const { data } = await API.post("/create-job", addjob, { withCredentials: true });
-      return fulfillWithValue(data);
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
-
+//get single job
 export const single_job = createAsyncThunk(
   "job/single_job",
   async ({ id }, { rejectWithValue, fulfillWithValue }) => {
@@ -53,6 +57,7 @@ export const single_job = createAsyncThunk(
   }
 );
 
+//update job
 export const update_job = createAsyncThunk(
   "job/update_job",
   async (
@@ -77,6 +82,7 @@ export const update_job = createAsyncThunk(
   }
 );
 
+//update logo
 export const update_logo = createAsyncThunk(
   "job/update_job",
   async ({ newImage, jobid }, { rejectWithValue, fulfillWithValue }) => {
@@ -93,6 +99,7 @@ export const update_logo = createAsyncThunk(
   }
 );
 
+//delete the job
 export const delet_job = createAsyncThunk(
   "job/delet_job",
   async ({ id }, { rejectWithValue, fulfillWithValue }) => {
@@ -178,8 +185,8 @@ export const jobReducer = createSlice({
   },
   reducers: {
     messageClear: (state, _) => {
-      state.successMessage = "";
-      state.errorMessage = "";
+      state.successMessage = null;
+      state.errorMessage = null;
     },
   },
   extraReducers: {
@@ -199,6 +206,8 @@ export const jobReducer = createSlice({
     },
     [add_jobs.pending]: (state, _) => {
       state.loading = true;
+      state.successMessage = "";
+      state.errorMessage = "";
     },
     [add_jobs.fulfilled]: (state, { payload }) => {
       state.successMessage = payload.message;
@@ -207,6 +216,18 @@ export const jobReducer = createSlice({
     [add_jobs.rejected]: (state, { payload }) => {
       state.errorMessage = payload.error;
       state.loading = false;
+    },
+    [update_job.pending]: (state, { payload }) => {
+      state.successMessage = "";
+      state.errorMessage = "";
+    },
+    [update_job.fulfilled]: (state, { payload }) => {
+      state.successMessage = payload.message;
+      state.errorMessage = "";
+    },
+    [update_job.rejected]: (state, { payload }) => {
+      state.successMessage = "";
+      state.errorMessage = payload.error;
     },
     [single_job.pending]: (state, _) => {
       state.loading = true;
@@ -231,13 +252,24 @@ export const jobReducer = createSlice({
     [table_jobs.rejected]: (state, _) => {
       state.loading = false;
     },
+    [delet_job.pending]: (state, { payload }) => {
+      state.successMessage = "";
+      state.errorMessage = "";
+      state.loading = true;
+    },
     [delet_job.fulfilled]: (state, { payload }) => {
       state.successMessage = payload.message;
+      state.loading = false;
     },
     [delet_job.rejected]: (state, { payload }) => {
       state.errorMessage = payload.error;
+      state.loading = false;
+    },
+    [get_all_apply_job.pending]: (state, { payload }) => {
+      state.loading = true;
     },
     [get_all_apply_job.fulfilled]: (state, { payload }) => {
+      state.loading = false;
       state.allApplyCount = payload.applyCount;
       state.allApplyjob = payload.allApplyJob;
     },

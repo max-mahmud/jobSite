@@ -113,7 +113,7 @@ const HomePage = () => {
             <div className="min-h-[400px]">
               {loading ? (
                 <div className="flex items-center justify-center min-h-[70vh]">
-                 <Loading />
+                  <Loading />
                 </div>
               ) : jobs.length > 0 ? (
                 jobs?.map((job, i) => (
@@ -129,7 +129,7 @@ const HomePage = () => {
                     <p className="text-slate-600 font-semibold ">Salary: {job.salary}</p>
                     <NavLink
                       className="bg-orange-500 px-4 py-2 mt-2 flex gap-3 w-[180px] items-center  rounded text-white hover:bg-orange-600 transition duration-300 text-[17px] font-medium"
-                      to={`/jobdetails/${job._id}`}
+                      to={`/jobdetails/${job?._id}`}
                     >
                       <span>
                         <ImPlus />
