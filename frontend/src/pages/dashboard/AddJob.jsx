@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { get_category, messageClear } from "../../store/reducers/categoryReducer";
-import { add_jobs } from "../../store/reducers/JobReducer";
+import { get_category } from "../../store/reducers/categoryReducer";
+import { add_jobs, messageClear } from "../../store/reducers/JobReducer";
 import { toast } from "react-toastify";
 import { Navigate, useNavigate } from "react-router-dom";
 import Loading from "../../components/Loading";
@@ -9,7 +9,7 @@ import Loading from "../../components/Loading";
 const AddJob = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading } = useSelector((state) => state.job);
+  const { loading, successMessage, errorMessage } = useSelector((state) => state.job);
   const { categorys } = useSelector((state) => state.cate);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -49,18 +49,14 @@ const AddJob = () => {
     formData.append("logo", logo);
 
     dispatch(add_jobs(formData));
-    setTitle("");
-    setDescription("");
-    setLocation("");
-    setSalary(" ");
-    setRequirements("");
-    setBenefits("");
-    setLogo("");
-    setCompany("");
-
-    setTimeout(() => {
-      toast.success("job created successfully");
-    }, 800);
+    // setTitle("");
+    // setDescription("");
+    // setLocation("");
+    // setSalary(" ");
+    // setRequirements("");
+    // setBenefits("");
+    // setLogo("");
+    // setCompany("");
   };
 
   useEffect(() => {
@@ -70,6 +66,18 @@ const AddJob = () => {
   const handleLogoChange = (e) => {
     setLogo(e.target.files[0]);
   };
+
+  useEffect(() => {
+    if (successMessage) {
+      toast.success(successMessage);
+      dispatch(messageClear());
+      return navigate("/dashboard");
+    }
+    if (errorMessage) {
+      toast.error(errorMessage);
+      dispatch(messageClear());
+    }
+  }, [successMessage, errorMessage]);
 
   return (
     <div className="h-[100vh] relative">

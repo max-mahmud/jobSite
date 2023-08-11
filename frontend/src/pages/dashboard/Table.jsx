@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { delet_job, table_jobs } from "../../store/reducers/JobReducer";
+import { delet_job, messageClear, table_jobs } from "../../store/reducers/JobReducer";
 import MyPagination from "../../components/MyPagination";
 import SearchBox from "../../components/SearchBox";
 import { toast } from "react-toastify";
-import { messageClear } from "../../store/reducers/categoryReducer";
 import { RiDeleteBin5Fill, RiEditBoxLine } from "react-icons/ri";
 import Loading from "./../../components/Loading";
 
@@ -70,7 +69,7 @@ const Table = () => {
                         <td>{j.description.slice(0, 30)}..</td>
                         <td>{j.salary}</td>
                         <td>{j.location}</td>
-                        <td>{j.category.name}</td>
+                        <td>{j.category?.name}</td>
                         <td>
                           <NavLink
                             to={`/dashboard/editjob/${j._id}`}

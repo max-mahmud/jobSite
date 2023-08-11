@@ -206,8 +206,6 @@ export const jobReducer = createSlice({
     },
     [add_jobs.pending]: (state, _) => {
       state.loading = true;
-      state.successMessage = "";
-      state.errorMessage = "";
     },
     [add_jobs.fulfilled]: (state, { payload }) => {
       state.successMessage = payload.message;
@@ -218,15 +216,14 @@ export const jobReducer = createSlice({
       state.loading = false;
     },
     [update_job.pending]: (state, { payload }) => {
-      state.successMessage = "";
-      state.errorMessage = "";
+      state.loading = true;
     },
     [update_job.fulfilled]: (state, { payload }) => {
+      state.loading = false;
       state.successMessage = payload.message;
-      state.errorMessage = "";
     },
     [update_job.rejected]: (state, { payload }) => {
-      state.successMessage = "";
+      state.loading = false;
       state.errorMessage = payload.error;
     },
     [single_job.pending]: (state, _) => {
@@ -253,8 +250,6 @@ export const jobReducer = createSlice({
       state.loading = false;
     },
     [delet_job.pending]: (state, { payload }) => {
-      state.successMessage = "";
-      state.errorMessage = "";
       state.loading = true;
     },
     [delet_job.fulfilled]: (state, { payload }) => {
@@ -270,11 +265,23 @@ export const jobReducer = createSlice({
     },
     [get_all_apply_job.fulfilled]: (state, { payload }) => {
       state.loading = false;
+      state.successMessage = payload.message;
       state.allApplyCount = payload.applyCount;
       state.allApplyjob = payload.allApplyJob;
     },
     [all_job_count.fulfilled]: (state, { payload }) => {
       state.allCount = payload.allCount;
+    },
+    [delete_apply_job.pending]: (state, { payload }) => {
+      state.loading = true;
+    },
+    [delete_apply_job.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.successMessage = payload.message;
+    },
+    [delete_apply_job.rejected]: (state, { payload }) => {
+      state.loading = false;
+      state.errorMessage = payload.error;
     },
   },
 });

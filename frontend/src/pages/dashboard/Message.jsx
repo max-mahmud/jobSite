@@ -1,15 +1,28 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { delete_msg, get_msg } from "../../store/reducers/messageReducer";
+import { delete_msg, get_msg, messageClear } from "../../store/reducers/messageReducer";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import Loading from "../../components/Loading";
+import { toast } from "react-toastify";
 
 const Message = () => {
   const dispatch = useDispatch();
-  const { msgs, loading } = useSelector((state) => state.msg);
+  const { msgs, loading, successMessage, errorMessage } = useSelector((state) => state.msg);
+
   useEffect(() => {
     dispatch(get_msg());
-  }, []);
+  }, [successMessage, dispatch]);
+
+  useEffect(() => {
+    if (successMessage) {
+      toast.success(successMessage);
+      dispatch(messageClear());
+    }
+    if (errorMessage) {
+      toast.error(errorMessage);
+      dispatch(messageClear());
+    }
+  }, [successMessage, errorMessage, dispatch]);
 
   return (
     <div>

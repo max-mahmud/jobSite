@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { messageClear, user_details, user_update } from "../store/reducers/userReducer"; // Import your actions
+import { messageClear, user_details, user_update } from "../store/reducers/userReducer";
 import { toast } from "react-toastify";
 import Loading from "./../components/Loading";
 

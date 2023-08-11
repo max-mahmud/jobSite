@@ -58,7 +58,29 @@ export const messageReducer = createSlice({
     },
     [get_msg.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.msgs = payload.mesages;
+      state.msgs = payload.allMsg;
+    },
+    [add_msg.pending]: (state, { payload }) => {
+      state.loading = true;
+    },
+    [add_msg.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.successMessage = payload.message;
+    },
+    [add_msg.rejected]: (state, { payload }) => {
+      state.loading = false;
+      state.errorMessage = payload.error;
+    },
+    [delete_msg.pending]: (state, { payload }) => {
+      state.loading = true;
+    },
+    [delete_msg.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.successMessage = payload.message;
+    },
+    [delete_msg.rejected]: (state, { payload }) => {
+      state.loading = false;
+      state.errorMessage = payload.error;
     },
   },
 });

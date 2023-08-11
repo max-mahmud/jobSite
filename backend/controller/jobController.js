@@ -285,7 +285,7 @@ exports.deleteApplyForm = async (req, res) => {
     const filePath = path.join(__dirname, "..", "uploads", form.resume);
     await fs.unlink(filePath, (error) => {
       if (error) {
-        console.error("Error deleting file:", error);
+        console.error("Error deleting file: at deleteApplyForm line 288 ");
       } else {
         console.log("File deleted:");
       }

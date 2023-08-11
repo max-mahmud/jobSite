@@ -1,30 +1,30 @@
 const msgModel = require("../model/messaeModel");
 
-exports.createMsg = async (req, res, next) => {
+exports.createMsg = async (req, res) => {
   const { name, email, message, userId } = req.body;
-  console.log(req.body);
   try {
     const newMsg = await msgModel.create({ name: name, email: email, message: message, user: userId });
-    return res.status(200).json({ message: "success message", newMsg: newMsg });
+    return res.status(200).json({ message: "Message send SuccessFully", newMsg: newMsg });
   } catch (error) {
-    console.log(error);
+    return res.status(500).json({ error: "Message Create Failed" });
   }
 };
 
-exports.deleteMsg = async (req, res, next) => {
+exports.deleteMsg = async (req, res) => {
   const { id } = req.params;
   try {
     await msgModel.findByIdAndDelete(id);
-    return res.status(200).json({ message: "message deleted" });
+    return res.status(200).json({ message: "Message deleted" });
   } catch (error) {
     console.log(error.message);
+    return res.status(500).json({ error: "Message Delete Failed" });
   }
 };
 
-exports.getAllMsg = async (req, res, next) => {
+exports.getAllMsg = async (req, res) => {
   try {
-    const allMsg = await msgModel.find({}).limit(12).sort({ createdAt: -1 }).populate("user");
-    return res.status(200).json({ mesages: allMsg });
+    const allMsg = await msgModel.find({}).limit(16).sort({ createdAt: -1 }).populate("user");
+    return res.status(200).json({ allMsg });
   } catch (error) {
     console.log(error.message);
   }

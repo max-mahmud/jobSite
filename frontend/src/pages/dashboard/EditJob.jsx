@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { get_category, messageClear } from "../../store/reducers/categoryReducer";
-import { add_jobs, single_job, update_job, update_logo } from "../../store/reducers/JobReducer";
+import { get_category } from "../../store/reducers/categoryReducer";
+import { single_job, update_job, update_logo, messageClear } from "../../store/reducers/JobReducer";
 import { toast } from "react-toastify";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Loading from "../../components/Loading";
 
 const AddJob = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { job, loading, successMessage, errorMessage } = useSelector((state) => state.job);
   const { categorys } = useSelector((state) => state.cate);
@@ -34,7 +33,7 @@ const AddJob = () => {
 
   useEffect(() => {
     dispatch(get_category());
-  }, [categorys, title, description, salary, location]);
+  }, []);
 
   useEffect(() => {
     setBenefits(job.benefits);
@@ -72,6 +71,7 @@ const AddJob = () => {
     }
   }, [successMessage, errorMessage]);
 
+  
   return (
     <div className="h-[100vh]">
       {loading ? (

@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { add_category, delete_category, get_category } from "../../store/reducers/categoryReducer";
+import {
+  add_category,
+  delete_category,
+  get_category,
+  messageClear,
+} from "../../store/reducers/categoryReducer";
 import CategoryModal from "../../components/Modal/CategoryModal";
 import { RiDeleteBin5Fill, RiEditBoxLine } from "react-icons/ri";
 import Loading from "../../components/Loading";
+import { toast } from "react-toastify";
 
 const AddCategory = () => {
   const dispatch = useDispatch();
-  const { categorys, loading } = useSelector((state) => state.cate);
+  const { categorys, loading, successMessage, errorMessage } = useSelector((state) => state.cate);
   const [category, setCategory] = useState("");
   const [open, setOpen] = useState(false);
   const [cateId, setCateId] = useState("");
+
   const handleCategory = (e) => {
     e.preventDefault();
     dispatch(add_category({ name: category }));
@@ -18,12 +25,24 @@ const AddCategory = () => {
 
   useEffect(() => {
     dispatch(get_category());
-  }, [loading]);
+  }, [dispatch, successMessage, errorMessage]);
 
   const handleEdit = (cid) => {
     setOpen(true);
     setCateId(cid);
   };
+
+  useEffect(() => {
+    if (successMessage) {
+      toast.success(successMessage);
+      dispatch(messageClear());
+    }
+    if (errorMessage) {
+      toast.error(errorMessage);
+      dispatch(messageClear());
+    }
+  }, [successMessage, errorMessage, dispatch]);
+
   return (
     <div className="bg-white relative flex justify-center items-center gap-10 flex-col text-slate-600 min-h-[90vh] m-5 p-4">
       <div>

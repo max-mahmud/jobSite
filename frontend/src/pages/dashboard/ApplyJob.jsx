@@ -1,21 +1,33 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { delete_apply_job, get_all_apply_job } from "../../store/reducers/JobReducer";
-import { RiDeleteBin5Fill, RiEditBoxLine } from "react-icons/ri";
+import { delete_apply_job, get_all_apply_job, messageClear } from "../../store/reducers/JobReducer";
+import { RiDeleteBin5Fill } from "react-icons/ri";
 import Loading from "./../../components/Loading";
+import { toast } from "react-toastify";
 
 const ApplyJob = () => {
   const dispatch = useDispatch();
-  const { allApplyCount, allApplyjob, loading } = useSelector((state) => state.job);
+  const { allApplyCount, allApplyjob, loading, successMessage, errorMessage } = useSelector((state) => state.job);
 
   useEffect(() => {
     dispatch(get_all_apply_job());
-  }, [delete_apply_job]);
+  }, [successMessage, dispatch, errorMessage]);
+
+  useEffect(() => {
+    if (successMessage) {
+      toast.success(successMessage);
+      dispatch(messageClear());
+    }
+    if (errorMessage) {
+      toast.error(errorMessage);
+      dispatch(messageClear());
+    }
+  }, [successMessage, errorMessage]);
 
   return (
     <div>
       <h3 className="bg-white w-11/12 mx-auto py-3 mt-3 px-4 text-3xl text-slate-600 font-semibold">
-        Total Job Applied{allApplyCount}
+        Total Job Applied {allApplyCount}
       </h3>
       {loading ? (
         <div className=" w-11/12 mx-auto h-[80vh] mt-2 flex justify-center items-center">

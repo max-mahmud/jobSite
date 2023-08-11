@@ -82,9 +82,9 @@ export const category = createSlice({
     },
   },
   extraReducers: {
-    // [get_category.pending]: (state, { payload }) => {
-    //   state.loading = true;
-    // },
+    [get_category.pending]: (state, { payload }) => {
+      state.loading = true;
+    },
     [get_category.fulfilled]: (state, { payload }) => {
       state.categorys = payload.category;
       state.loading = false;
@@ -97,18 +97,33 @@ export const category = createSlice({
     },
     [add_category.fulfilled]: (state, { payload }) => {
       state.loading = false;
+      state.successMessage = payload.message;
+    },
+    [add_category.rejected]: (state, { payload }) => {
+      state.loading = false;
+      state.errorMessage = payload.error;
     },
     [delete_category.pending]: (state, { payload }) => {
       state.loading = true;
     },
     [delete_category.fulfilled]: (state, { payload }) => {
       state.loading = false;
+      state.successMessage = payload.message;
+    },
+    [delete_category.rejected]: (state, { payload }) => {
+      state.loading = false;
+      state.errorMessage = payload.error;
     },
     [update_category.pending]: (state, { payload }) => {
       state.loading = true;
     },
     [update_category.fulfilled]: (state, { payload }) => {
       state.loading = false;
+      state.successMessage = payload.message;
+    },
+    [update_category.rejected]: (state, { payload }) => {
+      state.loading = false;
+      state.errorMessage = payload.error;
     },
   },
 });

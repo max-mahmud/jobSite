@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { add_msg, get_msg } from "../store/reducers/messageReducer";
+import { add_msg, get_msg, messageClear } from "../store/reducers/messageReducer";
+import { toast } from "react-toastify";
 
 const ContactPage = () => {
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.user);
-  const { msgs } = useSelector((state) => state.msg);
+  const { msgs, successMessage, errorMessage } = useSelector((state) => state.msg);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -23,7 +24,18 @@ const ContactPage = () => {
 
   useEffect(() => {
     dispatch(get_msg());
-  }, []);
+  }, [successMessage, dispatch, errorMessage]);
+
+  useEffect(() => {
+    if (successMessage) {
+      toast.success(successMessage);
+      dispatch(messageClear());
+    }
+    if (errorMessage) {
+      toast.error(errorMessage);
+      dispatch(messageClear());
+    }
+  }, [successMessage, errorMessage]);
 
   return (
     <div className="container mx-auto mt-10 p-5">
@@ -58,67 +70,72 @@ const ContactPage = () => {
         </div>
       </div>
       <div className="mt-10">
-        {msgs[0]?.user?._id === userInfo?.id ? (
+        {userInfo ? (
           <>
-            <div className="min-h-[20vh] flex justify-center items-center ">
-              <h3 className="text-2xl font-medium text-slate-500 text-center">You Already Send Message</h3>
-            </div>
+            {msgs[0]?.user?._id === userInfo?.id ? (
+              <>
+                <div className="min-h-[20vh] flex justify-center items-center ">
+                  <h3 className="text-2xl font-medium text-slate-500 text-center">
+                    You Already Send Message
+                  </h3>
+                </div>
+              </>
+            ) : (
+              <div>
+                <h2 className="text-xl font-medium mb-2 text-slate-600">Send Us a Message</h2>
+                <form onSubmit={handleSubmit}>
+                  <div className="mb-4">
+                    <label htmlFor="name" className="block font-medium">
+                      Your Name
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className="w-full border rounded-lg py-2 px-3 focus:outline-none focus:border-orange-500"
+                      placeholder="Your Name"
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label htmlFor="email" className="block font-medium">
+                      Your Email
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="w-full border rounded-lg py-2 px-3 focus:outline-none focus:border-orange-500"
+                      placeholder="Your Email"
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label htmlFor="message" className="block font-medium">
+                      Your Message
+                    </label>
+                    <textarea
+                      id="message"
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      className="w-full border rounded-lg py-2 px-3 focus:outline-none focus:border-orange-500"
+                      rows="4"
+                      placeholder="Your Message"
+                    ></textarea>
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={userInfo?.id ? false : true}
+                    className="bg-orange-500 text-white py-2 px-6 rounded font-medium text-lg hover:bg-orange-600 transition duration-300"
+                  >
+                    {userInfo?.id ? "Send" : "Login First"}
+                  </button>
+                </form>
+              </div>
+            )}
           </>
         ) : (
-          <div>
-            <h2 className="text-xl font-medium mb-2 text-slate-600">Send Us a Message</h2>
-            <form onSubmit={handleSubmit}>
-              <div className="mb-4">
-                <label htmlFor="name" className="block font-medium">
-                  Your Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="w-full border rounded-lg py-2 px-3 focus:outline-none focus:border-orange-500"
-                  placeholder="Your Name"
-                />
-              </div>
-              <div className="mb-4">
-                <label htmlFor="email" className="block font-medium">
-                  Your Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full border rounded-lg py-2 px-3 focus:outline-none focus:border-orange-500"
-                  placeholder="Your Email"
-                />
-              </div>
-              <div className="mb-4">
-                <label htmlFor="message" className="block font-medium">
-                  Your Message
-                </label>
-                <textarea
-                  id="message"
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  className="w-full border rounded-lg py-2 px-3 focus:outline-none focus:border-orange-500"
-                  rows="4"
-                  placeholder="Your Message"
-                ></textarea>
-              </div>
-              <button
-                type="submit"
-                disabled={userInfo?.id ? false : true}
-                className="bg-orange-500 text-white py-2 px-6 rounded font-medium text-lg hover:bg-orange-600 transition duration-300"
-              >
-                {
-                  userInfo?.id ? "Send" : "Login First"
-                }
-                
-              </button>
-            </form>
-          </div>
+          <div>Please Login first</div>
         )}
       </div>
     </div>

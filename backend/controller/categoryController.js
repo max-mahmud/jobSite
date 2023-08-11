@@ -4,11 +4,11 @@ exports.createCategory = async (req, res) => {
   const { name } = req.body;
   try {
     if (!name) {
-      return res.status(401).send({ message: "Name is required" });
+      return res.status(401).send({ error: "Name is required" });
     }
     const existingCategory = await categoryModel.findOne({ name });
     if (existingCategory) {
-      return res.status(200).send({
+      return res.status(401).send({
         success: true,
         error: "Category Already Exisits",
       });
@@ -16,12 +16,11 @@ exports.createCategory = async (req, res) => {
     const category = await categoryModel.create({ name });
     res.status(201).send({
       success: true,
-      message: "new category created",
+      message: "New category created",
       category,
     });
   } catch (error) {
     res.status(500).send({
-      success: false,
       error: "Errro in Category",
     });
   }
@@ -77,7 +76,7 @@ exports.updateCategory = async (req, res) => {
     );
 
     res.status(200).send({
-      message: "Category Updated and Deleted Successfully",
+      message: "Category Updated Successfully",
       updatedCategory,
     });
   } catch (error) {
