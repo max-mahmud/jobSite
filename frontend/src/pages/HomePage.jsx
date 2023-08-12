@@ -51,7 +51,7 @@ const HomePage = () => {
               onClick={() => setOpen(!open)}
               className="w-full bg-orange-500 text-slate-100 font-medium px-7 py-2"
             >
-              CLick To filter
+              Click To filter
             </button>
           </div>
           <div className="w-1/4 pt-5 ml-2 hidden md-lg:block">
@@ -80,12 +80,12 @@ const HomePage = () => {
           <div className="flex-1 bg-slate-100">
             <div className="min-h-[400px]">
               {loading ? (
-                <div className="flex items-center justify-center min-h-[70vh]">
+                <div className="flex items-center mt-4 justify-center h-[60vh]">
                   <Loading />
                 </div>
               ) : jobs.length > 0 ? (
                 jobs?.map((job, i) => (
-                  <div className=" my-4 bg-white p-4 rounded" key={i + 1}>
+                  <div className=" my-4 bg-white p-4 rounded  shadow-md" key={i + 1}>
                     <p className=" flex text-orange-500 items-center gap-3 font-medium">
                       <span className="text-orange-500 text-[17px]">
                         <MdAddLocationAlt />
@@ -96,7 +96,7 @@ const HomePage = () => {
                     <p className="text-slate-500 text-sm  font-semibold py-1">
                       {job.description.slice(0, 250)}...
                     </p>
-                    <p className="text-slate-600 font-semibold ">Salary: {job.salary}</p>
+                    <p className="text-slate-600 font-semibold ">Salary: ${job.salary}</p>
                     <NavLink
                       className="bg-orange-500 px-4 py-[6px] text-sm mt-2 flex gap-3 w-[160px] items-center  rounded text-white hover:bg-orange-600 transition duration-300 text-[17px] font-medium"
                       to={`/jobdetails/${job?._id}`}

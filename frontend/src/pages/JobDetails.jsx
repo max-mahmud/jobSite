@@ -55,7 +55,7 @@ const JobDetailsPage = () => {
       <Header />
 
       <div className="container min-h-screen mx-auto mt-10">
-        <div className="md-lg:flex md-lg:flex-row flex-col gap-5">
+        <div className="flex md-lg:flex-row flex-col gap-5">
           <div className="flex-1 bg-white p-6 rounded-lg shadow-md">
             <div className="w-40 h-40 mb-4">
               {loading ? (
@@ -73,12 +73,14 @@ const JobDetailsPage = () => {
               <span className="text-green-500 bg-slate-300/50 p-1 rounded-md">Location:</span> {job.location}
             </p>
 
+            <span className="text-green-500  bg-slate-300/50 p-1 rounded-md">Salary: Annual</span> ${job.salary}
+
             <div className="mb-6">
               <h2 className="text-lg my-2 font-medium text-slate-600">Requirements</h2>
               <p className="text-slate-500 text-sm font-semibold">{job.requirements}</p>
             </div>
           </div>
-          <div className="bg-white md-lg:mt-0 mt-5 p-6 rounded-lg shadow-md">
+          <div className="bg-white md-lg:mt-0 mt-5 p-6 rounded-lg flex-1 shadow-md">
             {loading ? (
               <div className="w-full h-full ">
                 <Loading />

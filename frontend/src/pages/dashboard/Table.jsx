@@ -53,11 +53,11 @@ const Table = () => {
                   <tr className="border overflow-x-auto">
                     <th className="py-2 text-xs md:text-base md-lg:text-lg ">ID</th>
                     <th className="py-2 text-xs md:text-base md-lg:text-lg">Title</th>
-                    <th className="py-2 text-xs md:text-base md-lg:text-lg sm:block hidden">Description</th>
+                    <th className="py-2 text-xs md:text-base md-lg:text-lg ">Description</th>
                     <th className="py-2 text-xs md:text-base md-lg:text-lg">Salary</th>
-                    <th className="py-2 text-xs md:text-base md-lg:text-lg">Location</th>
-                    <th className="py-2 text-xs md:text-base md-lg:text-lg">Category</th>
-                    <th className="md-lg:w-[150px] text-sm md:text-base md-lg:text-lg w-[100px]">Action</th>
+                    {/* <th className="py-2 text-xs md:text-base md-lg:text-lg sm:block hidden">Location</th> */}
+                    {/* <th className="py-2 text-xs md:text-base md-lg:text-lg">Category</th> */}
+                    <th className="py-2 text-sm md:text-base md-lg:text-lg ">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -65,14 +65,20 @@ const Table = () => {
                     return (
                       <tr className="bg-slate-50 hover:bg-slate-300" key={i + 1}>
                         <td className="py-2 whitespace-normal md-lg:text-base text-xs ">{i + 1}</td>
-                        <td className="py-2 whitespace-normal md-lg:text-base text-xs">{j.title}</td>
-                        <td className="whitespace-normal md-lg:text-base text-xs sm:block hidden">
+                        <td className="py-2 whitespace-normal md-lg:text-base text-xs">
+                          {j.title.slice(0, 9)}..
+                        </td>
+                        <td className="py-2 whitespace-normal md-lg:text-base text-xs ">
                           {j.description.slice(0, 30)}..
                         </td>
                         <td className="whitespace-normal md-lg:text-base text-xs">{j.salary}</td>
-                        <td className="whitespace-normal md-lg:text-base text-xs">{j.location}</td>
-                        <td className="whitespace-normal md-lg:text-base text-xs">{j.category?.name}</td>
-                        <td>
+                        {/* <td className="whitespace-normal md-lg:text-base text-xs sm:block hidden">
+                          {j.location.slice(0, 8)}
+                        </td> */}
+                        {/* <td className="whitespace-normal md-lg:text-base text-xs">
+                          {j.category?.name.slice(0, 9)}..
+                        </td> */}
+                        <td className="flex items-center justify-center gap-1">
                           <NavLink
                             to={`/dashboard/editjob/${j._id}`}
                             className="md:py-1 md:px-2 px-[3px] text-white hover:bg-orange-600 text-sm md-lg:text-lg  bg-orange-500 mr-2"
@@ -83,7 +89,7 @@ const Table = () => {
                           </NavLink>
                           <button
                             onClick={() => handleDeleteJob(j._id)}
-                            className="md:py-[7px] md:px-2 px-[3px] py-[2px] text-white hover:bg-red-600 text-sm md-lg:text-lg  bg-red-500"
+                            className="md:py-[9px] md:px-2 px-[3px] py-[3px] text-white hover:bg-red-600 text-sm md-lg:text-lg  bg-red-500"
                           >
                             <RiDeleteBin5Fill />
                           </button>

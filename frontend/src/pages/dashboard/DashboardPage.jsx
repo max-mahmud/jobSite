@@ -7,13 +7,13 @@ import { all_job_count, get_all_apply_job } from "../../store/reducers/JobReduce
 const DashboardPage = () => {
   const dispatch = useDispatch();
   const { userCount } = useSelector((state) => state.user);
-  const { allApplyCount, allCount } = useSelector((state) => state.job);
+  const { allApplyCount, allCount, successMessage } = useSelector((state) => state.job);
 
   useEffect(() => {
     dispatch(all_user());
     dispatch(get_all_apply_job());
     dispatch(all_job_count());
-  }, []);
+  }, [dispatch, successMessage]);
 
   return (
     <div className="">

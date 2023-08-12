@@ -4,7 +4,7 @@ import { MdAddLocationAlt } from "react-icons/md";
 const Filter = ({ handleChange, handleChangeCategory, categorys, uniqLocations ,setSort}) => {
   return (
     <>
-      <div className="bg-white p-4 ">
+      <div className="bg-white p-4 border">
         <h3 className="font-semibold text-xl text-orange-500 mb-4">Find Job By Category</h3>
         <select
           className="w-full p-2 rounded border focus:outline-none focus:ring-1 focus:ring-orange-500 appearance-none hover:bg-slate-100 text-slate-500 font-medium"
@@ -20,7 +20,7 @@ const Filter = ({ handleChange, handleChangeCategory, categorys, uniqLocations ,
           ))}
         </select>
       </div>
-      <div className="bg-white p-4 mt-4">
+      <div className="bg-white p-4 mt-4 border">
         <h3 className="font-semibold text-xl text-orange-500 mb-4">Find Job By Category</h3>
         <div className="flex flex-col mt-4">
           {uniqLocations.map((lc, i) => (
@@ -46,7 +46,7 @@ const Filter = ({ handleChange, handleChangeCategory, categorys, uniqLocations ,
           ))}
         </div>
       </div>
-      <div className="bg-white p-4 my-4 ">
+      <div className="bg-white p-4 my-4 border">
         <h3 className="font-semibold text-xl text-orange-500 mb-4">Sort By Date</h3>
 
         <select

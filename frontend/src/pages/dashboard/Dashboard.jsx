@@ -3,6 +3,7 @@ import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { AiFillDashboard, AiFillFileAdd , AiOutlineMenuFold} from "react-icons/ai";
 import { BiSolidCategoryAlt, BiMessageAltError } from "react-icons/bi";
 import { HiNewspaper } from "react-icons/hi";
+import { useSelector } from "react-redux";
 
 const Dashboard = () => {
   const { pathname } = useLocation();
@@ -154,7 +155,7 @@ const Dashboard = () => {
               <button onClick={() => setOpen(!open)} className="bg-white py-2 px-3 text-slate-700">
                 <AiOutlineMenuFold />
               </button>
-              <button>Hi! Alif</button>
+              <button>Hi! Admin</button>
             </div>
           </div>
         </div>

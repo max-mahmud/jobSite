@@ -73,7 +73,7 @@ const AddJob = () => {
       toast.error(errorMessage);
       dispatch(messageClear());
     }
-  }, [successMessage,dispatch, errorMessage]);
+  }, [successMessage, dispatch, errorMessage]);
 
   return (
     <div className="">
@@ -90,7 +90,7 @@ const AddJob = () => {
         >
           <div className="w-20 h-20 mx-auto mb-3">
             <img
-              className=" w-full object-cover border"
+              className=" w-full h-full object-cover border"
               src={logo ? URL.createObjectURL(logo) : job.logo}
               alt="img"
             />
