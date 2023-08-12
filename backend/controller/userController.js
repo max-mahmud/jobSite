@@ -49,13 +49,12 @@ exports.login = async (req, res) => {
       return res.status(401).send({ error: "Email not found " });
     }
   } catch (error) {
-    console.log(error);
     return res.status(500).send({ error: "Not login" });
   }
 };
 
 exports.logout = async (req, res, next) => {
-  return res.status(200).send({ token: "" });
+  return res.status(200).send({ token: "", message: "Logout Success" });
   // res.cookie("accessToken", null, {
   //   expires: new Date(Date.now()),
   //   httpOnly: true,

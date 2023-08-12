@@ -39,18 +39,15 @@ export const all_user = createAsyncThunk(
   }
 );
 
-export const logout = createAsyncThunk(
-  "auth/logout",
-  async ({ token }, { rejectWithValue, fulfillWithValue }) => {
-    try {
-      const { data } = await API.get("/logout", { token }, { withCredentials: true });
-      localStorage.removeItem("userToken");
-      return fulfillWithValue(data);
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
+export const logout = createAsyncThunk("auth/logout", async (_, { rejectWithValue, fulfillWithValue }) => {
+  try {
+    const { data } = await API.get("/logout", { withCredentials: true });
+    localStorage.removeItem("userToken");
+    return fulfillWithValue(data);
+  } catch (error) {
+    return rejectWithValue(error.response.data);
   }
-);
+});
 
 //single user details
 export const user_details = createAsyncThunk(
@@ -121,23 +118,26 @@ export const userReducer = createSlice({
     [user_login.pending]: (state, { payload }) => {
       state.loading = true;
     },
-    [user_login.rejected]: (state, { payload }) => {
-      state.errorMessage = payload.error;
-      state.loading = false;
-    },
     [user_login.fulfilled]: (state, { payload }) => {
       const userInfo = decodeToken(payload.token);
       state.successMessage = payload.message;
       state.loading = false;
       state.userInfo = userInfo;
     },
+    [user_login.rejected]: (state, { payload }) => {
+      state.errorMessage = payload.error;
+      state.loading = false;
+    },
     [all_user.fulfilled]: (state, { payload }) => {
       state.userCount = payload.userCount;
       state.users = payload.users;
     },
+    [logout.pending]: (state, { payload }) => {
+      state.loader = true;
+    },
     [logout.fulfilled]: (state, { payload }) => {
       state.loader = false;
-      state.successMessage = payload.message;
+      // state.successMessage = payload.message;
       state.userInfo = payload.token;
     },
     [user_details.pending]: (state, { payload }) => {

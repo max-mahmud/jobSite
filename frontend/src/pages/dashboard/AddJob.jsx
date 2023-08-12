@@ -77,7 +77,7 @@ const AddJob = () => {
       toast.error(errorMessage);
       dispatch(messageClear());
     }
-  }, [successMessage, errorMessage]);
+  }, [successMessage, dispatch, navigate, errorMessage]);
 
   return (
     <div className="h-[100vh] relative">
@@ -95,7 +95,7 @@ const AddJob = () => {
         <div className="w-24 h-24 mx-auto mb-3">
           <img
             className=" w-full object-cover border"
-            src={logo ? URL.createObjectURL(logo) : "/image/company.png"}
+            src={logo ? URL.createObjectURL(logo) : "/image/logo44.png"}
             alt="img"
           />
         </div>
@@ -160,9 +160,10 @@ const AddJob = () => {
               </label>
               <input
                 className="w-full outline-none bg-slate-100 py-2 px-4 rounded-md focus:bg-gray-100"
-                type="text"
+                type="number"
                 id="salary"
                 name="salary"
+                min={0}
                 placeholder="Please Enter Salary"
                 value={salary}
                 onChange={(e) => setSalary(e.target.value)}

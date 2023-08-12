@@ -24,26 +24,29 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(user_login(state));
+    // toast.success("Login Success");
   };
 
   useEffect(() => {
-    if (successMessage) {
-      toast.success(successMessage);
-      dispatch(messageClear());
-    }
-    if (errorMessage) {
-      toast.error(errorMessage);
-      dispatch(messageClear());
-    }
+    setTimeout(() => {
+      if (successMessage) {
+        toast.success(successMessage);
+        dispatch(messageClear());
+      }
+      if (errorMessage) {
+        toast.error(errorMessage);
+        dispatch(messageClear());
+      }
+    }, 600);
     if (userInfo) {
       navigate("/");
     }
-  }, [successMessage, errorMessage, userInfo]);
+  }, [successMessage, errorMessage, dispatch, navigate, userInfo]);
 
   //firstName, lastName, email, password
   return (
-    <div className="container mx-auto min-h-screen bg-slate-300 flex justify-center items-center">
-      <div className="bg-slate-100 w-[350px] mx-auto">
+    <div className="container mx-auto min-h-screen bg-slate-100 flex justify-center items-center">
+      <div className="bg-slate-200 w-[350px] mx-auto">
         <h3 className="text-center mt-3 text-2xl font-semibold text-green-500">Login Here!</h3>
         <form className="p-4" onSubmit={handleSubmit}>
           <div className="flex flex-col gap-2 mt-3">

@@ -12,13 +12,13 @@ const Footer = () => {
           <p>Follow us:</p>
           <div className="flex gap-4 mt-2">
             <NavLink to="#" className="hover:text-yellow-300 transition duration-300">
+              Linkedin
+            </NavLink>
+            <NavLink to="#" className="hover:text-yellow-300 transition duration-300">
+              Github
+            </NavLink>
+            <NavLink to="#" className="hover:text-yellow-300 transition duration-300">
               Facebook
-            </NavLink>
-            <NavLink to="#" className="hover:text-yellow-300 transition duration-300">
-              Twitter
-            </NavLink>
-            <NavLink to="#" className="hover:text-yellow-300 transition duration-300">
-              Instagram
             </NavLink>
           </div>
         </div>

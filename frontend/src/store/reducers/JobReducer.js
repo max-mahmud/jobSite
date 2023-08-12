@@ -249,6 +249,17 @@ export const jobReducer = createSlice({
     [table_jobs.rejected]: (state, _) => {
       state.loading = false;
     },
+    [apply_job.pending]: (state, { payload }) => {
+      state.loading = true;
+    },
+    [apply_job.fulfilled]: (state, { payload }) => {
+      state.successMessage = payload.message;
+      state.loading = false;
+    },
+    [apply_job.rejected]: (state, { payload }) => {
+      state.errorMessage = payload.error;
+      state.loading = false;
+    },
     [delet_job.pending]: (state, { payload }) => {
       state.loading = true;
     },

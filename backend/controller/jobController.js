@@ -238,9 +238,9 @@ exports.applyForm = async (req, res) => {
     fs.copyFile(files.resume[0].filepath, newPath, (error) => {
       if (error) {
         console.error(error);
-        return res.status(500).json({ error: "Error copying file." });
+        return res.status(500).json({ error: "Error when apply" });
       } else {
-        return res.json({ message: "File uploaded successfully." });
+        return res.json({ message: "File uploaded and job apply successfully" });
       }
     });
 
@@ -255,7 +255,7 @@ exports.applyForm = async (req, res) => {
       if (newForm) {
         await jobModel.findByIdAndUpdate(jobid, { applyForm: newForm._id }, { new: true });
       }
-      return res.status(201).json({ message: "Applied SuccessFully", form: newForm });
+      return res.status(201).json({ form: newForm });
     } catch (error) {}
   });
 };
@@ -295,7 +295,6 @@ exports.deleteApplyForm = async (req, res) => {
 
     return res.status(200).json({ message: "Delete Success" });
   } catch (error) {
-    console.error(error);
     return res.status(500).json({ error: "Error deleting form." });
   }
 };

@@ -3,8 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { messageClear, user_details, user_update } from "../store/reducers/userReducer";
 import { toast } from "react-toastify";
 import Loading from "./../components/Loading";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { userInfo, userDetails, successMessage, applyJobs, loading } = useSelector((state) => state.user);
 
@@ -17,7 +19,7 @@ const Profile = () => {
   });
 
   useEffect(() => {
-    dispatch(user_details(userInfo.id));
+    dispatch(user_details(userInfo?.id));
     if (successMessage) {
       toast.success(successMessage);
       dispatch(messageClear());
@@ -29,11 +31,18 @@ const Profile = () => {
         skill: "",
       });
     }
-  }, [dispatch, user_details, userInfo.id, successMessage]);
+  }, [dispatch, user_details, userInfo?.id, successMessage]);
 
   const handleUpdate = () => {
     dispatch(user_update({ id: userInfo.id, info: updatedUser }));
   };
+
+  useEffect(() => {
+    if (!userInfo) {
+      navigate("/");
+    }
+  }, [successMessage, userInfo]);
+
   return (
     <div className="container min-h-screen mx-auto">
       <div className="flex justify-between gap-5 mt-4">

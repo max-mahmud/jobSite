@@ -15,11 +15,14 @@ const AddJob = () => {
   const [description, setDescription] = useState();
   const [salary, setSalary] = useState();
   const [location, setLocation] = useState();
+
+  const [allCategory, setallCategory] = useState([]);
   const [cat, setCat] = useState("");
+
   const [company, setCompany] = useState();
   const [requirements, setRequirements] = useState();
   const [benefits, setBenefits] = useState();
-  const [logo, setLogo] = useState(false);
+  const [logo, setLogo] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -33,20 +36,21 @@ const AddJob = () => {
 
   useEffect(() => {
     dispatch(get_category());
+    setallCategory(categorys);
   }, []);
 
   useEffect(() => {
+    dispatch(single_job({ id }));
+
     setBenefits(job.benefits);
-    setCat(job.category);
+    setCat(job?.category?._id);
     setCompany(job.company);
     setDescription(job.description);
     setSalary(job.salary);
     setTitle(job.title);
     setLocation(job.location);
     setRequirements(job.requirements);
-
-    dispatch(single_job({ id }));
-  }, [job.logo]);
+  }, [job?.logo]);
 
   const changeImage = (files) => {
     if (files.length > 0) {
@@ -71,7 +75,6 @@ const AddJob = () => {
     }
   }, [successMessage, errorMessage]);
 
-  
   return (
     <div className="h-[100vh]">
       {loading ? (
@@ -130,16 +133,14 @@ const AddJob = () => {
                 </label>
                 <select
                   onChange={(e) => setCat(e.target.value)}
-                  className="w-full outline-none bg-slate-100 py-2 px-4 rounded-md focus:bg-gray-100"
+                  value={cat}
+                  className="w-full outline-none bg-slate-100 py-2 px-4 rounded-md focus:bg-gray-100 "
                   name="category"
                   id="category"
                 >
-                  <option className="bg-orange-300" value="">
-                    Select Category
-                  </option>
-                  {categorys?.map((c, i) => {
+                  {allCategory?.map((c, i) => {
                     return (
-                      <option className="bg-orange-300" value={c._id} key={i + 1}>
+                      <option className="bg-orange-300 cursor-pointer" value={c._id} key={i + 1}>
                         {c.name}
                       </option>
                     );

@@ -39,12 +39,12 @@ const Register = () => {
     if (userInfo) {
       navigate("/");
     }
-  }, [successMessage, errorMessage]);
+  }, [successMessage, errorMessage, navigate, dispatch, userInfo]);
 
   //firstName, lastName, email, password
   return (
-    <div className="container mx-auto min-h-screen bg-slate-300 flex justify-center items-center">
-      <div className="bg-slate-100 w-[350px] mx-auto">
+    <div className="container mx-auto min-h-screen bg-slate-200 flex justify-center items-center">
+      <div className="bg-slate-300 w-[350px] mx-auto">
         <h3 className="text-center mt-3 text-2xl font-semibold text-green-500">Register Here!</h3>
         <form className="p-4" onSubmit={handleSubmit}>
           <div className="flex flex-col gap-2">

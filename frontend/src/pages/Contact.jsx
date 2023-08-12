@@ -61,7 +61,7 @@ const ContactPage = () => {
         <h2 className="text-xl font-medium mb-2 text-slate-600">Visit Us</h2>
         <div className="embed-responsive aspect-w-24 aspect-h-9">
           <iframe
-            className="w-1/2 h-52"
+            className=" md-lg:w-1/2 w-full h-52"
             title="Google Maps"
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12345.67890123456!2d-123.45678901234567!3d12.345678901234567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTLCsDI4JzA4LjciTiAxMjPCsDAwJzExLjMiVw!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus"
             allowFullScreen
@@ -126,7 +126,7 @@ const ContactPage = () => {
                   <button
                     type="submit"
                     disabled={userInfo?.id ? false : true}
-                    className="bg-orange-500 text-white py-2 px-6 rounded font-medium text-lg hover:bg-orange-600 transition duration-300"
+                    className="bg-orange-500 text-white py-[6px] px-6 rounded font-medium hover:bg-orange-600 transition duration-300"
                   >
                     {userInfo?.id ? "Send" : "Login First"}
                   </button>
@@ -135,7 +135,9 @@ const ContactPage = () => {
             )}
           </>
         ) : (
-          <div>Please Login first</div>
+          <div>
+            <h3 className="text-lg font-medium text-center">Please Login first</h3>
+          </div>
         )}
       </div>
     </div>

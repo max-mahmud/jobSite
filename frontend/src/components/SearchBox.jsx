@@ -17,7 +17,7 @@ const SearchBox = ({ setKeyword }) => {
     <>
       <div className="flex w-full mx-auto">
         <input
-          className="py-3 w-full outline-none px-5 font-semibold"
+          className="py-2 w-full outline-none px-5 font-semibold"
           type="text"
           placeholder=" search"
           name="search"
@@ -26,7 +26,7 @@ const SearchBox = ({ setKeyword }) => {
         />
         <button
           onClick={handleSubmit}
-          className="py-3 px-10 bg-orange-500 text-slate-100 font-semibold text-lg"
+          className="py-2 px-10 bg-orange-500 text-slate-100 font-semibold "
         >
           Search
         </button>
