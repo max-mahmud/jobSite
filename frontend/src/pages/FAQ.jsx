@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 const FaqPage = () => {
   const faqData = [
@@ -40,25 +42,29 @@ const FaqPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <div className="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
-        <h1 className="text-xl font-semibold text-orange-600 mb-6">Frequently Asked Questions</h1>
-        <div className="space-y-4">
-          {faqData.map((faq, index) => (
-            <div key={index} className="border-b py-3">
-              <button
-                className="flex justify-between items-center w-full font-semibold focus:outline-none"
-                onClick={() => toggleAccordion(index)}
-              >
-                <span className="text-slate-600">{faq.question}</span>
-                <span className="text-orange-600">{expandedIndex === index ? "▲" : "▼"}</span>
-              </button>
-              {expandedIndex === index && <p className="text-gray-700 mt-2">{faq.answer}</p>}
-            </div>
-          ))}
+    <>
+      <Header />
+      <div className="min-h-screen bg-gray-100 p-8">
+        <div className="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
+          <h1 className="text-xl font-semibold text-orange-600 mb-6">Frequently Asked Questions</h1>
+          <div className="space-y-4">
+            {faqData.map((faq, index) => (
+              <div key={index} className="border-b py-3">
+                <button
+                  className="flex justify-between items-center w-full font-semibold focus:outline-none"
+                  onClick={() => toggleAccordion(index)}
+                >
+                  <span className="text-slate-600">{faq.question}</span>
+                  <span className="text-orange-600">{expandedIndex === index ? "▲" : "▼"}</span>
+                </button>
+                {expandedIndex === index && <p className="text-gray-700 mt-2">{faq.answer}</p>}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 

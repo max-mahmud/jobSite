@@ -80,33 +80,26 @@ const AddJob = () => {
   }, [successMessage, dispatch, navigate, errorMessage]);
 
   return (
-    <div className="h-[100vh] relative">
-      {loading ? (
-        <div className=" absolute top-0 right-0 bottom-0 left-0 w-[97%]  h-[88vh] mx-auto flex justify-center items-center">
-          <Loading />
-        </div>
-      ) : (
-        ""
-      )}
+    <div className=" relative">
       <form
         onSubmit={handleSubmit}
         className=" p-4 my-5 w-[97%] mx-auto bg-white gap-3 justify-center items-center"
       >
-        <div className="w-24 h-24 mx-auto mb-3">
+        <div className="w-20 h-20 mx-auto mb-3">
           <img
             className=" w-full object-cover border"
             src={logo ? URL.createObjectURL(logo) : "/image/logo44.png"}
             alt="img"
           />
         </div>
-        <div className="flex">
+        <div className="flex md-lg:flex-row flex-col">
           <div className="flex flex-col w-full">
             <div className="flex flex-col p-2 gap-2 w-full">
-              <label className="text-xl text-orange-500" htmlFor="title">
+              <label className=" font-medium text-orange-500" htmlFor="title">
                 Title
               </label>
               <input
-                className="w-full outline-none bg-slate-100 py-2 px-4 rounded-md focus:bg-gray-100"
+                className="w-full outline-none text-sm bg-slate-100 py-2 px-4 rounded-md focus:bg-gray-100"
                 type="text"
                 id="title"
                 name="title"
@@ -116,11 +109,11 @@ const AddJob = () => {
               />
             </div>
             <div className="flex flex-col p-2 gap-2 w-full">
-              <label className="text-xl text-orange-500" htmlFor="description">
+              <label className=" font-medium text-orange-500" htmlFor="description">
                 Description
               </label>
               <textarea
-                className="w-full outline-none bg-slate-100 py-2 px-4 rounded-md focus:bg-gray-100"
+                className="w-full outline-none text-sm bg-slate-100 py-2 px-4 rounded-md focus:bg-gray-100"
                 type="text"
                 id="description"
                 name="description"
@@ -132,12 +125,12 @@ const AddJob = () => {
               ></textarea>
             </div>
             <div className="flex flex-col p-2 gap-2 w-full">
-              <label className="text-xl text-orange-500" htmlFor="category">
+              <label className=" font-medium text-orange-500" htmlFor="category">
                 Category
               </label>
               <select
                 onChange={(e) => setCat(e.target.value)}
-                className="w-full outline-none bg-slate-100 py-2 px-4 rounded-md focus:bg-gray-100"
+                className="w-full outline-none text-sm bg-slate-100 py-2 px-4 rounded-md focus:bg-gray-100"
                 name="category"
                 id="category"
               >
@@ -155,11 +148,11 @@ const AddJob = () => {
             </div>
 
             <div className="flex flex-col p-2 gap-2 w-full">
-              <label className="text-xl text-orange-500" htmlFor="salary">
+              <label className=" font-medium text-orange-500" htmlFor="salary">
                 Salary
               </label>
               <input
-                className="w-full outline-none bg-slate-100 py-2 px-4 rounded-md focus:bg-gray-100"
+                className="w-full outline-none text-sm bg-slate-100 py-2 px-4 rounded-md focus:bg-gray-100"
                 type="number"
                 id="salary"
                 name="salary"
@@ -170,11 +163,11 @@ const AddJob = () => {
               />
             </div>
             <div className="flex flex-col p-2 gap-2 w-full">
-              <label className="text-xl text-orange-500" htmlFor="location">
+              <label className=" font-medium text-orange-500" htmlFor="location">
                 Location
               </label>
               <input
-                className="w-full outline-none bg-slate-100 py-2 px-4 rounded-md focus:bg-gray-100"
+                className="w-full outline-none text-sm bg-slate-100 py-2 px-4 rounded-md focus:bg-gray-100"
                 type="text"
                 id="location"
                 name="location"
@@ -186,11 +179,11 @@ const AddJob = () => {
           </div>
           <div className="flex flex-col w-full">
             <div className="flex  flex-col p-2 gap-2 w-full">
-              <label className="text-xl text-orange-400 " htmlFor="company">
+              <label className=" font-medium text-orange-400 " htmlFor="company">
                 Company
               </label>
               <input
-                className="w-full outline-orange-300 bg-slate-100  py-2 px-4"
+                className="w-full outline-none text-sm bg-slate-100  py-2 px-4"
                 type="text"
                 id="company"
                 name="company"
@@ -200,11 +193,11 @@ const AddJob = () => {
               />
             </div>
             <div className="flex  flex-col p-2 gap-2 w-full">
-              <label className="text-xl text-orange-400 " htmlFor="requirements">
+              <label className=" font-medium text-orange-400 " htmlFor="requirements">
                 Requirements
               </label>
               <textarea
-                className="w-full outline-orange-300 bg-slate-100  py-2 px-4"
+                className="w-full outline-none text-sm bg-slate-100  py-2 px-4"
                 type="text"
                 id="requirements"
                 name="requirements"
@@ -216,11 +209,11 @@ const AddJob = () => {
               ></textarea>
             </div>
             <div className="flex  flex-col p-2 gap-2 w-full">
-              <label className="text-xl text-orange-400 " htmlFor="benefits">
+              <label className=" font-medium text-orange-400 " htmlFor="benefits">
                 Benefits
               </label>
               <textarea
-                className="w-full outline-orange-300 bg-slate-100  py-2 px-4"
+                className="w-full outline-none text-sm bg-slate-100  py-2 px-4"
                 type="text"
                 id="benefits"
                 name="benefits"
@@ -232,7 +225,7 @@ const AddJob = () => {
               ></textarea>
             </div>
             <div className="flex  flex-col p-2 gap-2 w-full">
-              <label className="text-xl text-orange-400 " htmlFor="logo">
+              <label className=" font-medium text-orange-400 " htmlFor="logo">
                 Logo
               </label>
               <input
@@ -240,7 +233,7 @@ const AddJob = () => {
                 type="file"
                 accept=".jpg,.jpeg,.png"
                 onChange={handleLogoChange}
-                className="w-full outline-orange-300 bg-slate-100 py-2 px-4"
+                className="w-full outline-none text-sm bg-slate-100 py-2 px-4"
                 id="logo"
                 name="logo"
               />

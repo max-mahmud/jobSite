@@ -34,13 +34,13 @@ const Table = () => {
   }, [successMessage, errorMessage]);
 
   return (
-    <div className=" dash-table">
-      <div className="flex justify-end w-11/12 mx-auto">
-        <div className="bg-white w-6/12 flex justify-end border">
+    <div className=" mx-auto mb-6 dash-table">
+      <div className="flex justify-end w-full mx-auto">
+        <div className="bg-white md-lg:w-6/12 w-full flex justify-end border">
           <SearchBox setKeyword={setKeyword} />
         </div>
       </div>
-      <table className="bg-white w-11/12 mx-auto text-center border mt-3">
+      <table className="bg-white w-full mx-auto text-center border mt-3">
         {loading ? (
           <div className="h-[350px] w-full">
             <Loading />
@@ -50,30 +50,32 @@ const Table = () => {
             {count > 0 ? (
               <>
                 <thead className=" bg-slate-300 py-2">
-                  <tr className="border">
-                    <th className="py-2">ID</th>
-                    <th className="py-2">Title</th>
-                    <th>Description</th>
-                    <th>Salary</th>
-                    <th>Location</th>
-                    <th>Category</th>
-                    <th className="w-[150px]">Action</th>
+                  <tr className="border overflow-x-auto">
+                    <th className="py-2 text-xs md:text-base md-lg:text-lg ">ID</th>
+                    <th className="py-2 text-xs md:text-base md-lg:text-lg">Title</th>
+                    <th className="py-2 text-xs md:text-base md-lg:text-lg sm:block hidden">Description</th>
+                    <th className="py-2 text-xs md:text-base md-lg:text-lg">Salary</th>
+                    <th className="py-2 text-xs md:text-base md-lg:text-lg">Location</th>
+                    <th className="py-2 text-xs md:text-base md-lg:text-lg">Category</th>
+                    <th className="md-lg:w-[150px] text-sm md:text-base md-lg:text-lg w-[100px]">Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   {tableJobs?.map((j, i) => {
                     return (
                       <tr className="bg-slate-50 hover:bg-slate-300" key={i + 1}>
-                        <td className="py-2">{i + 1}</td>
-                        <td className="py-2">{j.title}</td>
-                        <td>{j.description.slice(0, 30)}..</td>
-                        <td>{j.salary}</td>
-                        <td>{j.location}</td>
-                        <td>{j.category?.name}</td>
+                        <td className="py-2 whitespace-normal md-lg:text-base text-xs ">{i + 1}</td>
+                        <td className="py-2 whitespace-normal md-lg:text-base text-xs">{j.title}</td>
+                        <td className="whitespace-normal md-lg:text-base text-xs sm:block hidden">
+                          {j.description.slice(0, 30)}..
+                        </td>
+                        <td className="whitespace-normal md-lg:text-base text-xs">{j.salary}</td>
+                        <td className="whitespace-normal md-lg:text-base text-xs">{j.location}</td>
+                        <td className="whitespace-normal md-lg:text-base text-xs">{j.category?.name}</td>
                         <td>
                           <NavLink
                             to={`/dashboard/editjob/${j._id}`}
-                            className="py-1 text-white hover:bg-orange-600 px-2 text-lg  bg-orange-500 mr-2"
+                            className="md:py-1 md:px-2 px-[3px] text-white hover:bg-orange-600 text-sm md-lg:text-lg  bg-orange-500 mr-2"
                           >
                             <button>
                               <RiEditBoxLine />
@@ -81,7 +83,7 @@ const Table = () => {
                           </NavLink>
                           <button
                             onClick={() => handleDeleteJob(j._id)}
-                            className="py-[7px] text-white hover:bg-orange-600 text-lg px-2 bg-orange-500"
+                            className="md:py-[7px] md:px-2 px-[3px] py-[2px] text-white hover:bg-red-600 text-sm md-lg:text-lg  bg-red-500"
                           >
                             <RiDeleteBin5Fill />
                           </button>
@@ -105,7 +107,7 @@ const Table = () => {
         <>
           {count > 8 && (
             <>
-              <div className="bg-white w-11/12 mx-auto text-right border">
+              <div className="bg-white w-full mx-auto text-right border">
                 <div className="mr-8">
                   <MyPagination setPage={setPage} page={page} />
                 </div>

@@ -22,8 +22,8 @@ const CategoryModal = ({ setOpen, open, cateId }) => {
   }, [dispatch, cateId, category.name]);
 
   return (
-    <div className="flex items-center justify-center min-h-[60vh] m-5 p-5">
-      <div className="bg-slate-500 min-h-[35vh] relative w-2/6 flex items-center justify-center">
+    <div className="flex items-center bbbbbbbbbb justify-center h-full z-50 m-5 p-5">
+      <div className="bg-slate-500 min-h-[35vh] w-2/6 flex items-center justify-center">
         <form onSubmit={handleEditCategory} className="">
           <div className="flex flex-col items-center justify-center gap-5">
             <input
@@ -36,7 +36,6 @@ const CategoryModal = ({ setOpen, open, cateId }) => {
               value={categoryName}
             />
             <button
-              //   onClick={() => setOpen(!open)}
               className="bg-orange-500 w-full text-white hover:bg-orange-600 font-medium text-lg py-2 px-7"
             >
               Edit Category

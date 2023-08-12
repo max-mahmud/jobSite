@@ -9,6 +9,8 @@ import { ImPlus } from "react-icons/im";
 import Loading from "../components/Loading";
 import { MdAddLocationAlt } from "react-icons/md";
 import Filter from "../components/Filter";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 const HomePage = () => {
   const { categorys } = useSelector((state) => state.cate);
@@ -40,6 +42,7 @@ const HomePage = () => {
 
   return (
     <>
+      <Header />
       <div className="min-h-screen bg-slate-100">
         <Banner setKeyword={setKeyword} />
         <div className=" container mx-auto flex md-lg:flex-row flex-col gap-5">
@@ -119,6 +122,7 @@ const HomePage = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

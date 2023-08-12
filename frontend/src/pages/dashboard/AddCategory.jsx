@@ -44,12 +44,12 @@ const AddCategory = () => {
   }, [successMessage, errorMessage, dispatch]);
 
   return (
-    <div className="bg-white relative flex justify-center items-center gap-10 flex-col text-slate-600 min-h-[90vh] m-5 p-4">
+    <div className="bg-white relative flex justify-center items-center gap-10 flex-col text-slate-600 min-h-[77vh] m-5 p-4">
       <div>
         <form onSubmit={handleCategory} className="flex items-center flex-col gap-4">
-          <div className="flex items-center justify-center gap-2">
+          <div className="flex items-center justify-center gap-2 md:flex-row flex-col">
             <input
-              className="outline-none border px-10 py-2 font-medium text-slate-500"
+              className="outline-none border text-sm md:text-base px-10 py-2 font-medium text-slate-500"
               type="text"
               id="category"
               name="category"
@@ -57,7 +57,7 @@ const AddCategory = () => {
               onChange={(e) => setCategory(e.target.value)}
               value={category}
             />
-            <button className="bg-orange-500 text-white hover:bg-orange-600 font-medium text-lg py-2 px-6">
+            <button className="bg-orange-500 text-sm md:text-base text-white hover:bg-orange-600 font-medium py-2 px-6">
               Add Category
             </button>
           </div>
@@ -65,7 +65,7 @@ const AddCategory = () => {
       </div>
       <div className="w-full">
         {loading ? (
-          <div className=" w-11/12 mx-auto h-[300px] mt-2 flex justify-center items-center">
+          <div className=" w-11/12 mx-auto h-[50vh] mt-2 flex justify-center items-center">
             <Loading />
           </div>
         ) : (
@@ -87,14 +87,14 @@ const AddCategory = () => {
                       <td>
                         <button
                           onClick={() => handleEdit(j._id)}
-                          className="py-2 mr-3 text-lg text-white hover:bg-orange-600 px-2 bg-orange-500"
+                          className="md:p-2 p-1 z-50 mr-3 text-lg text-white hover:bg-orange-600  bg-orange-500"
                         >
                           <RiEditBoxLine />
                         </button>
 
                         <button
                           onClick={() => dispatch(delete_category(j._id))}
-                          className="py-2 text-lg text-white hover:bg-orange-600 px-2 bg-orange-500"
+                          className="md:p-2 p-1 text-lg text-white hover:bg-red-600  bg-red-500"
                         >
                           <RiDeleteBin5Fill />
                         </button>
@@ -109,7 +109,7 @@ const AddCategory = () => {
       </div>
       {open ? (
         <>
-          <div className="w-full min-h-[60vh] absolute top-0 right-0 bottom-0 left-0 bg-[#1F1E1EA6]">
+          <div className=" min-h-[40vh] absolute top-0 bottom-0 right-0 left-0 bg-[#1F1E1EA6]">
             <CategoryModal setOpen={setOpen} open={open} cateId={cateId} />
           </div>
         </>

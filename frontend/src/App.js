@@ -23,7 +23,6 @@ import Message from "./pages/dashboard/Message";
 const App = () => {
   return (
     <>
-      <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/profile" element={<Profile />} />
@@ -46,7 +45,6 @@ const App = () => {
           </Route>
         </Route>
       </Routes>
-      <Footer />
     </>
   );
 };

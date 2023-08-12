@@ -6,9 +6,11 @@ const ProtechUser = () => {
   const { userInfo } = useSelector((state) => state.user);
 
   if (userInfo) {
-    return <Outlet />;
-  } else {
-    return <Navigate to={"/login"} replace={true} />;
+    if (userInfo?.role === 1) {
+      return <Outlet />;
+    } else {
+      return <Navigate to={"/login"} replace={true} />;
+    }
   }
 };
 
