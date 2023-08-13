@@ -58,7 +58,7 @@ const ApplyJob = () => {
                     <td>
                       <button
                         onClick={() => dispatch(delete_apply_job(j._id))}
-                        className="md:p-2 p-1 text-lg text-white hover:bg-orange-600  bg-orange-500"
+                        className="md:p-2 p-1 text-lg text-white hover:bg-red-600  bg-red-500"
                       >
                         <RiDeleteBin5Fill />
                       </button>

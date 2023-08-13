@@ -52,7 +52,7 @@ const Message = () => {
                   <td>
                     <button
                       onClick={() => dispatch(delete_msg(j._id))}
-                      className="p-2 text-white hover:bg-orange-600 text-sm md-lg:text-lg bg-orange-500"
+                      className="p-2 text-white hover:bg-red-600 text-sm md-lg:text-lg bg-red-500"
                     >
                       <RiDeleteBin5Fill />
                     </button>
